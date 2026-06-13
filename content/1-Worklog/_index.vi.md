@@ -25,7 +25,7 @@ Thông thường và cũng là tiêu chuẩn, một worklog được thực hi�
 
 **Tuần 7:** [Tự học tại nhà, Thiết kế kiến trúc AWS & Chuẩn bị dự án](1.7-week7/)
 
-**Tuần 8:** [Làm công việc H...](1.8-week8/)
+**Tuần 8:** [Thiết lập dự án Frontend và Thiết kế Kiến trúc hệ thống CloudDoc](1.8-week8/)
 
 **Tuần 9:** [Làm công việc I...](1.9-week9/)
 

@@ -1,5 +1,5 @@
 ﻿---
-title: "Worklog Tuần 8"
+title: "Thiết lập dự án Frontend và Thiết kế Kiến trúc hệ thống CloudDoc"
 date: 2024-01-01
 weight: 1
 chapter: false
@@ -7,49 +7,28 @@ pre: " <b> 1.8. </b> "
 ---
 ### Mục tiêu tuần 8:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Hoàn thiện và chốt bản vẽ sơ đồ kiến trúc hạ tầng đám mây (AWS Architecture Diagram) theo chuẩn Multi-AZ để làm kim chỉ nam cho dự án.
+* Khởi tạo dự án ứng dụng Web (Frontend) bằng ReactJS, thiết lập môi trường lập trình và xây dựng các giao diện chức năng cốt lõi (Upload, Tìm kiếm, Bộ lọc) cho hệ thống CloudDoc.
+* Kết hợp quá trình tự phát triển với việc tham gia học tập trực tiếp tại văn phòng để trao đổi định hướng kỹ thuật và hoàn thiện giao diện theo góp ý của mentor.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu / Công cụ |
+| --- | --- | --- | --- | --- |
+| 2 | Hoàn thiện sơ đồ kiến trúc hạ tầng (AWS Architecture):<br>- Vẽ và thiết kế flow kết nối chi tiết giữa VPC, ALB, EC2, RDS PostgreSQL, S3, SQS và CloudWatch.<br>- Rà soát luồng dữ liệu (Data Flow) đảm bảo tính sẵn sàng cao (HA) và bảo mật Private Subnet. | 08/06/2026 | 08/06/2026 |  |
+| 3 | Tham gia học tập trực tiếp tại văn phòng kết hợp khởi tạo dự án Frontend & Global State:<br>- Trao đổi với mentor và các thành viên về định hướng giao diện, luồng người dùng và cách tổ chức source code.<br>- Khởi tạo source code ReactJS, tích hợp framework Tailwind CSS.<br>- Thiết lập React Context API (AppContext) để quản lý trạng thái toàn cục (Đăng nhập, Thông báo/Chuông báo). | 09/06/2026 | 09/06/2026 |  |
+| 4 | Phát triển giao diện Phân hệ Đăng tải (Upload Module):<br>- Thiết kế Form Upload hỗ trợ kéo thả tệp tin (Drag & Drop).<br>- Xây dựng các trường nhập Metadata và thanh tiến trình tải lên (Progress Bar) mô phỏng thời gian thực. | 10/06/2026 | 10/06/2026 |  |
+| 5 | Phát triển Phân hệ Tìm kiếm & Khám phá:<br>- Xây dựng thanh Tìm kiếm trực quan (Search Bar).<br>- Lập trình logic cho Bộ lọc đa tầng động: Liên kết dữ liệu 3 tầng (Trường -> Ngành -> Môn học) tự động thay đổi theo lựa chọn. | 11/06/2026 | 11/06/2026 |  |
+| 6 | Tích hợp Trình xem tài liệu & Phân quyền cơ bản:<br>- Tích hợp thẻ iframe (hoặc react-pdf) để xem trước (Preview) tài liệu PDF/Docx trực tiếp trên web.<br>- Cấu hình Role-based Routing (Phân quyền): Ẩn chức năng Upload đối với khách vãng lai. | 12/06/2026 | 12/06/2026 |  |
 
 
 ### Kết quả đạt được tuần 8:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
+* Chốt duyệt thành công bản vẽ sơ đồ kiến trúc AWS CloudDoc, đáp ứng tiêu chí tối ưu hóa và bảo mật của mentor.
+* Kết hợp hiệu quả việc học tập tại văn phòng với quá trình phát triển cá nhân, giúp định hình rõ hơn luồng chức năng và tiêu chuẩn giao diện của hệ thống.
+* Thiết lập thành công bộ khung source code Frontend với ReactJS và Tailwind CSS, xử lý mượt mà luồng dữ liệu toàn cục bằng Context API.
+* Xây dựng hoàn thiện biểu mẫu Upload hỗ trợ kéo thả và thanh hiển thị phần trăm tiến trình tải lên chuyên nghiệp.
+* Lập trình thành công tính năng bộ lọc danh mục 3 tầng tương tác động (Trường -> Ngành -> Môn) và thanh tìm kiếm từ khóa.
+* Nhúng thành công trình xem tài liệu trực tuyến vào giao diện, cho phép người dùng đọc PDF trực tiếp với độ trễ thấp.
 
 
 

@@ -24,7 +24,7 @@ Typically, and as a standard, a worklog is carried out over about 3 months (thro
 
 **Week 7:** [Self-study, AWS architecture design, and project preparation](1.7-week7/)
 
-**Week 8:** [Doing task H...](1.8-week8/)
+**Week 8:** [Frontend project setup and CloudDoc system architecture design](1.8-week8/)
 
 **Week 9:** [Doing task I...](1.9-week9/)
 
