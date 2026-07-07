@@ -1,36 +1,43 @@
-﻿---
-title: "Workshop: Application and Database Modernization with the GenAI Platform"
+---
+title: "Event 2: AWS Community Day at Bitexco - AWS learning, growth mindset, and DevOps"
 date: 2024-01-01
-weight: 1
+weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-# Event 2
+### Event information
 
-### Event Information
+| Item | Details |
+| --- | --- |
+| Event name | AWS Community Day focused on AWS learning, personal growth, hackathons, and DevOps |
+| Date | **May 30, 2026** |
+| Location | **Bitexco Tower, AWS Office, Ho Chi Minh City** |
+| Participation role | Attendee, note-taker, and learner connecting the event lessons to the internship journey |
+| Participation format | Followed a sequence of specialist talks from the Community Day program |
 
-- **Event Name:** Workshop: Application and Database Modernization with the GenAI Platform
-- **Date & Time:** 09:00, May 30, 2026
-- **Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Ben Nghe Ward, District 1, Ho Chi Minh City
-- **Role:** Attendee
+### Main content of the event
 
-### Summary of Content and Main Activities
+Event 2 had a very different tone from Event 1. While Event 1 focused more on architecture, AI, and enterprise infrastructure, Event 2 felt closer to the lived experience of students and early-career developers. The event explored how to learn AWS effectively, how to overcome hesitation when starting difficult work, how teams survive high-pressure environments such as hackathons, and why DevOps should be understood as a way of working rather than only a collection of tools.
 
-- **Architecture Analysis and Transformation:** Identified bottlenecks of legacy monolithic systems and introduced the transition toward flexible microservices with clear functional separation.
-- **Domain-Driven Design and Event Architecture:** Explored the DDD approach and how to manage data flow through event-driven architecture using queues and caching mechanisms.
-- **Compute Infrastructure Optimization:** Reviewed the evolution path from traditional virtual machines (EC2) to containers (ECS/Fargate) and serverless architecture (Lambda) for cost optimization.
-- **Applying Generative AI to the SDLC:** Demonstrated the power of Amazon Q Developer in automating parts of the software development lifecycle and supporting source code modernization.
+What I appreciated most was that the event stayed grounded in real concerns. The discussion around Cloud Quest and Floci showed that beginners often struggle not only with technical complexity, but also with fear of unexpected cost and fear of making mistakes in a live cloud environment. That made the conversation highly relevant, especially for students moving from theory into hands-on AWS practice.
 
-### Outcomes and Value Gained
+Another part that stayed with me was the discussion about procrastination and confidence. Instead of treating procrastination as simple laziness, the speakers described it as the visible outcome of deeper fears such as fear of not being good enough, fear of judgment, and fear of failure. The confidence discussion complemented that idea well by showing that confidence does not mean waiting until you feel fully ready. It means being willing to act even while uncertainty is still present. For me, this was highly relatable to project work, because many students do not fail due to a lack of potential, but because they hesitate too long before taking action.
 
-- **Lessons learned:** Developed a deeper understanding that software development must always start from business problems before choosing technology. Also understood that modernization should happen in clearly defined phases to protect ROI and avoid risky “big bang” transitions.
-- **New skills:** Learned the Event Storming technique for modeling business processes and how to break large systems into bounded contexts for easier management.
-- **Broader perspective:** Better understood the difference between synchronous and asynchronous communication models and how to apply pub/sub and streaming patterns effectively.
+The event also included reflections on hackathon culture and what teams learn when they have to move from idea to prototype under strict time pressure. That part helped me see more clearly the value of scope control, fast coordination, and keeping the core problem in focus. In many ways, it reflected the same challenge we faced in CloudDoc: not everything can be built at once, so the team must protect the most valuable part of the product first.
 
-### Skills and Experience Accumulated
+The final part that made a strong impression on me was the DevOps discussion. The key idea was that visible problems such as missed deadlines, deployment failures, production bugs, or team exhaustion are often only surface symptoms. The deeper causes usually lie in unclear requirements, weak communication, manual processes, or a lack of ownership. That helped me understand DevOps less as tooling and more as a mindset for reducing friction across people, process, and technology.
 
-- **System design mindset:** Domain-Driven Design, microservices, and event-driven architecture.
-- **Cloud computing knowledge:** Clearer understanding of AWS compute service layers, including virtual machines, containers, and serverless.
-- **AI tooling awareness:** Gained insight into how AI assistants such as Amazon Q can improve development productivity and maintenance workflows.
+### What I learned from the event
 
+After attending Event 2, I learned that technical growth depends heavily on human factors. Sometimes the real obstacle is not a lack of knowledge, but a lack of confidence, a poor learning environment, or an unclear workflow. I also understood more clearly that project speed does not come from trying to do everything at once. It comes from choosing the right priorities, splitting work clearly, and keeping collaboration smooth.
+
+These lessons connected naturally to CloudDoc. From the AWS-learning perspective, I realized the importance of safe practice environments and cost awareness before touching real resources. From the teamwork perspective, I saw that frontend, backend, and AWS work only move together well when scope and communication stay aligned. From the operations perspective, the DevOps theme reminded me that many technical issues are actually symptoms of process problems.
+
+### Connection to CloudDoc
+
+This event helped me see CloudDoc more realistically in three ways. First, a cloud-based project needs safe experimentation and stronger cost awareness. Second, product progress depends not only on code quality, but also on confidence, teamwork, and scope discipline. Third, long-term system quality is shaped as much by coordination and workflow as by implementation details.
+
+### Personal reflection
+
+What I valued most in Event 2 was the balance between technology and human development. The event did not try to impress people with service lists alone. Instead, it helped me understand that growth in software always includes learning habits, mindset, teamwork, and process thinking. For me, that made Event 2 especially useful during the internship period because it improved not only what I know, but also how I approach project work.

@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Self-study, AWS architecture design, and project preparation"
 date: 2024-01-01
 weight: 1

@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Practice environment setup and basic AWS architecture"
 date: 2024-01-01
 weight: 1
@@ -7,24 +7,23 @@ pre: " <b> 1.1. </b> "
 ---
 ### Week 1 Objectives:
 
-* Connect with the new working environment and get acquainted with members of the First Cloud AI Journey (FCAJ) program.
-* Build a solid understanding of cloud computing fundamentals and become familiar with the AWS Management Console and CLI.
+- Understand the overall structure of the First Cloud AI Journey program and the rules for learning at the AWS office.
+- Create and configure an AWS account for upcoming hands-on practice.
+- Get familiar with the learning roadmap and the foundational knowledge resources of the program.
+- Complete the first AWS labs to become comfortable with the practice environment.
 
 ### Tasks to be carried out this week:
 | Day | Task | Start Date | Completion Date | Reference Material |
 | --- | --- | --- | --- | --- |
-| 2 | - Attend the FCAJ program orientation session.<br><br>- Review and note the working rules and regulations at the AWS office. | 17/04/2026 | 17/04/2026 |  |
-| 3 | - Learn the overall AWS ecosystem.<br><br>- Explore the functions of the core service groups: Compute, Storage, Networking, and Database. | 18/04/2026 | 18/04/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 4 | - Set up an AWS Free Tier account for hands-on practice.<br><br>- Start getting familiar with navigation in the AWS Console.<br><br>- Watch the foundational theory videos (Module 01). | 19/04/2026 | 19/04/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 5 | - Dive deeper into Amazon EC2: instance types, AMIs, and EBS storage.<br><br>- Install and configure AWS CLI on a personal device. | 20/04/2026 | 20/04/2026 |  |
-| 6 | - **Practice Lab 1 & 2:** Launch an EC2 virtual server, establish a remote SSH connection, and practice attaching an EBS volume. | 21/04/2026 | 21/04/2026 |  |
-
+| 1 | **Learning about the FCAJ program and AWS office rules**<br><br>- Read the general introduction to the First Cloud AI Journey program, its learning structure, and internship expectations.<br><br>- Reviewed the rules for studying and working at the AWS office throughout the program. | 17/04/2026 | 17/04/2026 |  |
+| 2 | **Creating and configuring an AWS account**<br><br>- Set up an AWS account for learning and hands-on practice.<br><br>- Became familiar with the AWS Management Console and basic service navigation. | 18/04/2026 | 18/04/2026 |  |
+| 3 | **Getting familiar with the learning roadmap and foundational materials**<br><br>- Reviewed the program roadmap to understand the sequence of major topics.<br><br>- Watched and explored introductory YouTube resources covering foundational AWS knowledge. | 19/04/2026 | 19/04/2026 |  |
+| 4 | **Completing Lab 1 and Lab 2**<br><br>- Followed the first lab instructions provided by the program.<br><br>- Practiced basic AWS operations and started turning theory into hands-on experience. | 20/04/2026 | 20/04/2026 |  |
 
 ### Week 1 Achievements:
 
-* Clearly understood the overall AWS architecture and distinguished the roles of the core platform service groups, including Compute, Storage, Networking, and Database.
-* Successfully and securely set up the practice environment with an AWS Free Tier account.
-* Used the AWS Management Console effectively to look up, configure, and interact with online services.
-* Completed the AWS CLI installation on a personal computer, including configuring credentials such as Access Key, Secret Key, and the default Region.
-* Learned how to deploy and manage EC2 virtual machines and gained the ability to work flexibly between the web interface and CLI to manage resources in parallel.
-
+- Understood the overall structure of the FCAJ program, the learning process, and the basic expectations during the internship period.
+- Became aware of the key rules at the AWS office and prepared better for a professional learning environment.
+- Successfully created an AWS account and gained first-hand familiarity with the AWS console.
+- Built a clearer understanding of the study roadmap and the foundational learning materials provided by the program.
+- Completed Lab 1 and Lab 2, which helped me start learning AWS through both theory and hands-on practice.

@@ -1,18 +1,30 @@
 ---
-title : "Access S3 from VPC"
-date : 2024-01-01
-weight : 3
-chapter : false
-pre : " <b> 5.3. </b> "
+title: "Designing a secure Amazon S3 upload flow"
+date: 2024-01-01
+weight: 3
+chapter: false
+pre: " <b> 5.3. </b> "
 ---
+### Proposed flow
 
-#### Using Gateway endpoint
+1. The user selects a file and enters metadata in CloudDoc.
+2. The frontend requests a presigned upload URL from the backend.
+3. The backend returns a short-lived URL and S3 key.
+4. The frontend uploads the file directly to S3.
+5. The frontend then sends metadata to the backend for persistence.
 
-In this section, you will create **a Gateway eendpoint** to access **Amazon S3** from **an EC2 instance**. **The Gateway endpoint** will allow upload an object to S3 buckets without using **the Public Internet**. To create an endpoint, you must specify the VPC in which you want to create the endpoint, and the service (in this case, S3) to which you want to establish the connection.
+### Why presigned URLs
 
-![overview](/images/5-Workshop/5.3-S3-vpc/diagram2.png)
+- They reduce backend load.
+- They improve security through time-limited access.
+- They scale better as file volume increases.
 
-#### Content
+### Important considerations
 
-- [Create gateway endpoint](3.1-create-gwe/)
-- [Test gateway endpoint](3.2-test-gwe/)
+- Validate file size and type.
+- Use structured S3 keys.
+- Avoid storing metadata if the real upload failed.
+
+### Architectural value
+
+This pattern clearly separates storage from business logic and is one of the strongest cloud-aligned decisions in the CloudDoc design.

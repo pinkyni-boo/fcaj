@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Core infrastructure practice (EC2, S3) and IAM security"
 date: 2024-01-01
 weight: 1

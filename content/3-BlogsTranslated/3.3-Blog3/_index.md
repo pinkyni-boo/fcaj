@@ -1,123 +1,58 @@
-﻿---
+---
 title: "Blog 3"
 date: 2024-01-01
-weight: 1
+weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
-# Getting Started with Healthcare Data Lakes: Using Microservices
+# Using IAM Compute Roles for Server-Side Rendering Applications on AWS Amplify Hosting
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+The third blog I translated focused on a practical security and operations concern: when building server-side rendering applications such as **Next.js** or **Nuxt** on AWS, how can the server-side code access AWS resources safely without storing `Access Key` or `Secret Key` values in source code or environment variables?
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+AWS introduced **IAM Compute Roles** for **AWS Amplify Hosting** to solve this problem. I found this topic especially important because it connects directly to real cloud security practices.
 
----
+### 1. What IAM Compute Roles are
 
-## Architecture Guidance
+IAM Compute Roles allow an **IAM Role** to be attached directly to the runtime environment of an SSR application hosted on Amplify. As a result, server-side code can access AWS services through temporary permissions, in a way similar to **EC2 Instance Profiles** or **Lambda Execution Roles**.
 
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
+The main benefits are:
 
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
+- no hard-coded access keys,
+- better permission control per environment,
+- and stronger alignment with the **Principle of Least Privilege**.
 
-**The solution architecture is now as follows:**
+### 2. Common use cases
 
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
+According to the AWS article, IAM Compute Roles are useful when:
 
----
+- accessing **AWS Secrets Manager** or **Systems Manager Parameter Store**,
+- connecting to **Amazon RDS** or **Amazon DynamoDB** without embedding credentials,
+- calling AWS service APIs from server-side application code,
+- and using different permission scopes for development, staging, and production.
 
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
+### 3. Example implementation
 
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
+In the AWS example, a **Next.js** application was configured to access a private **Amazon S3 bucket**. The main flow included:
 
----
+1. creating an IAM Role with read access to S3,
+2. allowing Amplify Hosting to use that role,
+3. deploying the Next.js application to Amplify,
+4. and using the AWS SDK inside an API Route to access S3 data.
 
-## Technology Choices and Communication Scope
+With IAM Compute Roles, the application can authenticate against AWS without storing sensitive credentials in code.
 
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+### 4. What I learned from this blog
 
----
+This blog helped me understand that cloud security is not only about network rules or private subnets. It also depends on how an application receives permission to access resources. From the CloudDoc perspective, this is a very important lesson because once the system moves closer to real deployment, credential management and permission design must be handled properly from the beginning.
 
-## The Pub/Sub Hub
+### 5. Connection to CloudDoc
 
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
+- CloudDoc should favor **IAM Roles** instead of hard-coded access keys when deployed on AWS.
+- Features such as file upload, presigned URL generation, and private resource access should follow a secure permission model.
+- This article also supports the FCAJ evaluation checklist around security and **least privilege**.
 
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
+### 6. Conclusion
 
----
+IAM Compute Roles simplify AWS permission management for SSR applications hosted on Amplify. It is a very useful feature for systems that need server-side access to AWS resources while still maintaining strong security and permission-governance practices.
 
-## Core Microservice
-
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
-
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
-
----
-
-## Front Door Microservice
-
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
-
----
-
-## Staging ER7 Microservice
-
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
-
----
-
-## New Features in the Solution
-
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
-
+**FCAJ group post link:** https://www.facebook.com/share/p/1PEvrCKJsS/

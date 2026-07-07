@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Technology event participation and generative AI solution research"
 date: 2024-01-01
 weight: 1

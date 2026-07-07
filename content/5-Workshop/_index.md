@@ -1,27 +1,47 @@
-﻿---
+---
 title: "Workshop"
 date: 2024-01-01
 weight: 5
 chapter: false
 pre: " <b> 5. </b> "
 ---
-# Secure Hybrid Access to S3 using VPC Endpoints
 
-#### Overview
+This workshop is rewritten to match the **CloudDoc** project instead of keeping unrelated AWS lab material. Its main focus is a **secure document upload workflow on AWS**, where the frontend uploads files directly to Amazon S3 through presigned URLs while the backend manages metadata, access control, and related business logic.
 
-**AWS PrivateLink** provides private connectivity to AWS services from VPCs and your on-premises networks, without exposing your traffic to the Public Internet.
+I chose this topic because it clearly connects frontend, backend, and cloud architecture in one practical flow. In CloudDoc, changing the upload design changes the whole system direction: backend load is reduced, metadata becomes easier to manage, and the cloud architecture is used more effectively.
 
-In this lab, you will learn how to create, configure, and test VPC endpoints that enable your workloads to reach AWS services without traversing the Public Internet.
+### Workshop goals
 
-You will create two types of endpoints to access Amazon S3: a Gateway VPC endpoint, and an Interface VPC endpoint. These two types of VPC endpoints offer different benefits depending on if you are accessing Amazon S3 from the cloud or your on-premises location
-+ **Gateway** - Create a gateway endpoint to send traffic to Amazon S3 or DynamoDB using private IP addresses.You route traffic from your VPC to the gateway endpoint using route tables.
-+ **Interface** - Create an interface endpoint to send traffic to endpoint services that use a Network Load Balancer to distribute traffic. Traffic destined for the endpoint service is resolved using DNS.
+- Describe a practical upload workflow suitable for a document-management system.
+- Explain why presigned URLs are a strong fit for CloudDoc.
+- Show the relationship between the frontend upload form, backend APIs, and S3 storage.
+- Clarify security, metadata, access control, and scalability considerations.
 
-#### Content
+### Why this topic fits CloudDoc
 
-1. [Workshop overview](5.1-Workshop-overview)
-2. [Prerequiste](5.2-Prerequiste/)
-3. [Access S3 from VPC](5.3-S3-vpc/)
-4. [Access S3 from On-premises](5.4-S3-onprem/)
-5. [VPC Endpoint Policies (Bonus)](5.5-Policy/)
-6. [Clean up](5.6-Cleanup/)
+CloudDoc handles learning documents, which means:
+
+- File volume can grow significantly.
+- Upload flow must be simple and reliable for users.
+- Metadata must remain structured for search and moderation.
+- The architecture should stay extensible for future background processing tasks.
+
+That makes a presigned-URL and S3-focused workshop much more relevant than unrelated AWS lab steps.
+
+### Workshop content
+
+**5.1:** [Workshop overview](5.1-workshop-overview/)
+
+**5.2:** [Prerequisites](5.2-prerequiste/)
+
+**5.3:** [Designing a secure Amazon S3 upload flow](5.3-s3-vpc/)
+
+**5.4:** [Integrating APIs, metadata, and user roles](5.4-s3-onprem/)
+
+**5.5:** [Security, operations, and AWS expansion path](5.5-policy/)
+
+**5.6:** [Cleanup and cost control](5.6-cleanup/)
+
+### Learning value
+
+This workshop helped me understand not just one technical trick, but how an architectural decision can influence user experience, backend performance, and future system operations. It also made the connection between my frontend role and the backend/AWS direction of the team much clearer.

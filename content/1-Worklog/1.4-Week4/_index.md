@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Real office experience and project kick-off"
 date: 2024-01-01
 weight: 1

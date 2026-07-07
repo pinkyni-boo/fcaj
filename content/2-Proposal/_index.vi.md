@@ -6,91 +6,132 @@ chapter: false
 pre: " <b> 2. </b> "
 ---
 # Bản đề xuất: CloudDoc Platform for HUTECH Students
-## Hệ thống quản lý và tra cứu tài liệu học tập thông minh tích hợp kiến trúc Sẵn sàng cao trên AWS
+## Hệ thống quản lý và tra cứu tài liệu học tập thông minh theo định hướng triển khai trên AWS
 
 ### 1. Tóm tắt điều hành
-Nền tảng CloudDoc được thiết kế nhằm giải quyết bài toán lưu trữ, quản lý và tra cứu tài liệu học tập như slide, giáo trình và đề thi cho sinh viên HUTECH. Hệ thống cung cấp khả năng tìm kiếm nội dung sâu với tốc độ cao, đồng thời đảm bảo an toàn dữ liệu thông qua kiến trúc mạng nội bộ cô lập với Private Subnet.
+CloudDoc là nền tảng hỗ trợ sinh viên HUTECH lưu trữ, tìm kiếm, chia sẻ và khai thác tài liệu học tập như giáo trình, slide, đề cương, bài tập và đề thi. Bài toán mà hệ thống hướng đến không chỉ là có nơi để tải file lên, mà là xây dựng một thư viện học liệu có cấu trúc, có kiểm duyệt và có khả năng mở rộng lâu dài.
 
-Giải pháp sử dụng hệ sinh thái AWS hiện đại gồm Application Load Balancer, Amazon EC2 triển khai theo mô hình Multi-AZ, Amazon RDS PostgreSQL, Amazon SQS, Amazon S3, CloudWatch và SNS để đảm bảo hiệu năng, tính sẵn sàng cao và khả năng xử lý bất đồng bộ. Hệ thống cũng áp dụng tư duy FinOps bằng cách tự động chuyển vòng đời lưu trữ từ Amazon S3 sang S3 Glacier nhằm tối ưu chi phí vận hành dài hạn.
+Trong phạm vi thực tập, tôi tham gia chính ở mảng frontend, đồng thời hỗ trợ nhóm kết nối luồng giao diện với backend, metadata và hạ tầng AWS. Vì vậy, bản đề xuất này vừa phản ánh góc nhìn sản phẩm, vừa phản ánh tư duy kỹ thuật để đưa CloudDoc từ một đồ án học tập thành một hệ thống có thể triển khai trên cloud.
 
-### 2. Tuyên bố vấn đề
+Điểm quan trọng của CloudDoc là hệ thống không được thiết kế như một website upload file đơn giản. Thay vào đó, kiến trúc được tách lớp rõ ràng giữa giao diện, logic nghiệp vụ, metadata tài liệu và object storage. Cách tiếp cận này giúp hệ thống dễ mở rộng hơn về hiệu năng, bảo mật và vận hành.
+
+### 2. Bối cảnh và nhu cầu thực tế
+Trong môi trường học tập hiện nay, tài liệu thường bị phân tán trên Google Drive cá nhân, nhóm chat, link tạm thời hoặc thư mục nội bộ thiếu tổ chức. Điều này dẫn đến nhiều vấn đề:
+
+- Sinh viên tốn thời gian tìm lại tài liệu đúng môn học hoặc đúng phiên bản.
+- Chất lượng tài liệu khó kiểm soát vì không có cơ chế duyệt và gắn metadata thống nhất.
+- Tài liệu dễ bị trùng lặp, thất lạc hoặc mất giá trị khi link cũ hết hiệu lực.
+- Người dùng mới khó xác định tài liệu nào đáng tin cậy và còn phù hợp.
+
+Đối với HUTECH, một nền tảng học liệu tập trung sẽ giúp giảm ma sát trong quá trình tự học, tăng khả năng chia sẻ tài nguyên có tổ chức và hình thành kho tài liệu dùng chung theo trường, ngành và môn học. CloudDoc được đề xuất để giải quyết chính nhu cầu đó.
+
+### 3. Tuyên bố vấn đề
 **Vấn đề hiện tại**
 
-Các nền tảng chia sẻ tài liệu nội bộ của sinh viên thường được triển khai theo mô hình máy chủ đơn lẻ, dẫn đến rủi ro ngừng dịch vụ khi lượng truy cập tăng cao vào mùa thi. Việc xử lý tệp PDF hoặc Word trực tiếp trên máy chủ làm nghẽn CPU và giảm trải nghiệm người dùng. Ngoài ra, dùng một hệ thống tìm kiếm chuyên biệt cồng kềnh cho phạm vi dự án cấp trường là chưa tối ưu, trong khi việc lưu trữ tài liệu cũ lâu dài trên lớp lưu trữ nóng gây lãng phí chi phí hạ tầng.
+Nếu xây dựng hệ thống theo mô hình đơn giản, nghĩa là toàn bộ upload và download đều đi qua application server, backend sẽ nhanh chóng trở thành nút nghẽn khi số lượng tài liệu và lưu lượng tăng. Ngoài ra, khi file và metadata không tách riêng, hệ thống khó mở rộng phần tìm kiếm, kiểm duyệt, preview và phân quyền.
 
-**Giải pháp**
+Một vấn đề khác là nhiều hệ thống chỉ giải quyết phần lưu file, nhưng chưa giải quyết tốt phần khai thác tài liệu. Nếu không có metadata như trường, ngành, môn học, người đăng, trạng thái duyệt và lượt sử dụng, trải nghiệm tra cứu sẽ kém hiệu quả và dữ liệu sẽ dần trở nên lộn xộn.
 
-CloudDoc áp dụng kiến trúc tách rời và sẵn sàng cao:
+**Giải pháp đề xuất**
 
-- Người dùng truy cập hệ thống qua Application Load Balancer ở Public Subnet.
-- Các máy chủ Amazon EC2 và cơ sở dữ liệu RDS PostgreSQL được đặt trong Private Subnet để tăng cường bảo mật.
-- Client tải tệp trực tiếp lên Amazon S3 thông qua Presigned URL thay vì đi qua máy chủ ứng dụng.
-- Khi có tệp mới trên S3, sự kiện được đẩy vào Amazon SQS để EC2 Worker xử lý bóc tách văn bản theo nền.
-- Metadata và dữ liệu tìm kiếm được lưu tập trung trên Amazon RDS PostgreSQL, tận dụng khả năng Full-text Search tích hợp sẵn.
-- CloudWatch và SNS theo dõi tài nguyên hệ thống và gửi cảnh báo khi có dấu hiệu quá tải.
+CloudDoc được đề xuất theo cấu trúc sau:
 
-**Lợi ích và hoàn vốn đầu tư (ROI)**
+- Frontend React cung cấp trải nghiệm tìm kiếm, upload, preview và quản trị tài liệu.
+- Backend Node.js/Express xử lý logic nghiệp vụ, xác thực, phân quyền và cấp presigned URL.
+- PostgreSQL lưu metadata tài liệu, thông tin người dùng, trạng thái duyệt và thống kê tải.
+- Amazon S3 lưu file gốc để giảm tải cho backend và phù hợp với mô hình object storage.
+- Các dịch vụ mở rộng như CloudFront, SQS, CloudWatch, SNS và Glacier được đưa vào định hướng để tăng hiệu năng, xử lý nền, giám sát và tối ưu chi phí.
 
-Giải pháp tạo ra một cổng học liệu tập trung, tra cứu nhanh, vận hành an toàn và dễ mở rộng. Việc tự động chuyển tài liệu ít truy cập sang S3 Glacier giúp tiết kiệm đáng kể chi phí lưu trữ. Cơ chế tải trực tiếp lên S3 giảm tải băng thông và CPU cho EC2. Việc sử dụng RDS PostgreSQL thay cho một cụm tìm kiếm riêng biệt cũng giúp tối ưu ngân sách cho giai đoạn đầu của dự án.
+Mấu chốt của giải pháp là cho frontend upload trực tiếp lên S3 bằng presigned URL, trong khi backend tập trung vào metadata và nghiệp vụ. Kiến trúc này phù hợp hơn cho một nền tảng tài liệu số có xu hướng tăng trưởng cả về dung lượng lẫn số lượng người dùng.
 
-### 3. Kiến trúc giải pháp
-Nền tảng được thiết kế theo hướng phân tách rõ luồng truy cập web và luồng xử lý nền, đồng thời đảm bảo tính sẵn sàng cao nhờ triển khai trên nhiều Availability Zone.
+### 4. Kiến trúc giải pháp
+Kiến trúc dưới đây mô tả định hướng triển khai CloudDoc trên AWS với lớp phân phối nội dung, lớp ứng dụng, lớp dữ liệu và lớp giám sát vận hành:
 
-![CloudDoc AWS Architecture](/images/2-Proposal/clouddoc-architecture.png)
+![CloudDoc AWS Architecture](/fcaj/images/2-Proposal/aws-drawio-cloudoc.png)
 
-**Dịch vụ AWS sử dụng**
+**Mô tả các thành phần chính**
 
-- **VPC, Internet Gateway và ALB:** Thiết lập lớp mạng bảo mật và tiếp nhận lưu lượng truy cập từ Internet.
-- **Amazon EC2 (Multi-AZ):** Chạy ứng dụng Node.js, xử lý API, tạo Presigned URL và thực hiện các tác vụ nền.
-- **Amazon RDS PostgreSQL:** Lưu trữ metadata, dữ liệu nghiệp vụ và hỗ trợ Full-text Search.
-- **Amazon S3 và S3 Glacier:** Lưu file tài liệu và tự động chuyển dữ liệu cũ sang lớp lưu trữ lạnh.
-- **Amazon SQS:** Tách rời luồng tải tệp và luồng xử lý bóc tách văn bản.
-- **Amazon CloudWatch và Amazon SNS:** Giám sát hạ tầng và gửi cảnh báo khi CPU hoặc tài nguyên đạt ngưỡng rủi ro.
+- **Amazon CloudFront và Amazon S3 (Static):** phân phối frontend tĩnh nhanh hơn tới người dùng, giảm độ trễ và giảm tải cho backend.
+- **Internet Gateway và Application Load Balancer:** đóng vai trò lớp tiếp nhận và định tuyến request vào backend.
+- **Amazon EC2:** chạy backend Express, cấp presigned URL, nhận metadata và xử lý logic nghiệp vụ.
+- **Amazon RDS PostgreSQL:** lưu metadata tài liệu, tài khoản, trạng thái phê duyệt và thông tin phục vụ tra cứu.
+- **Amazon S3 (Upload):** lưu file gốc và hỗ trợ luồng upload trực tiếp từ frontend.
+- **Amazon SQS:** là hướng mở rộng cho các tác vụ bất đồng bộ như quét file, trích xuất metadata hoặc indexing.
+- **Amazon CloudWatch và Amazon SNS:** hỗ trợ logging, monitoring, alerting và phản ứng sớm với sự cố.
+- **Amazon S3 Glacier:** tối ưu chi phí lưu trữ dài hạn cho tài liệu cũ, ít truy cập.
 
-**Thiết kế thành phần**
+**Ý nghĩa kiến trúc đối với CloudDoc**
 
-- **Frontend:** Xây dựng bằng React và Tailwind CSS, cung cấp giao diện Upload, Search, Filter và Preview tài liệu.
-- **Application Layer:** EC2 App Server tiếp nhận request từ ALB, xử lý logic người dùng và cấp Presigned URL.
-- **Background Processing:** EC2 Worker nhận tin nhắn từ SQS để xử lý bóc tách nội dung tài liệu.
-- **Storage Layer:** Tệp gốc lưu trên S3, metadata lưu trong RDS PostgreSQL, dữ liệu ít truy cập được chuyển sang Glacier.
-- **Monitoring Layer:** CloudWatch thu thập metrics, SNS gửi email cảnh báo khi phát sinh sự cố.
+Kiến trúc này cho thấy CloudDoc không chỉ là bài tập giao diện, mà là một hệ thống có lớp phân phối nội dung, lớp xử lý ứng dụng, lớp dữ liệu giao dịch, lớp lưu trữ object và lớp giám sát. Đây là nền tảng cần thiết nếu dự án muốn phát triển tiếp sau kỳ thực tập.
 
-### 4. Triển khai kỹ thuật
-**Các giai đoạn triển khai**
+### 5. Phạm vi triển khai thực tế trong kỳ thực tập
+Trong kỳ thực tập, nhóm tập trung vào những phần khả thi và bám sát codebase hiện có:
 
-1. **Thiết kế và hoạch định:** Hoàn thiện AWS Architecture Diagram, thiết kế UI/UX và chuẩn hóa schema PostgreSQL.
-2. **Khởi tạo mạng và tài nguyên:** Cấu hình VPC, Public Subnet, Private Subnet, Security Group, ALB, EC2, RDS và SQS.
-3. **Phát triển và tích hợp:** Xây dựng Frontend React, API Node.js, luồng Presigned URL, luồng xử lý nền và Full-text Search trong PostgreSQL.
-4. **Giám sát và tối ưu:** Cấu hình CloudWatch Alarm, SNS, kiểm thử tải, tối ưu vòng đời lưu trữ S3 và đo độ ổn định toàn hệ thống.
+- Xây dựng frontend React cho Home, Search, Upload, Preview, User Profile và Admin Dashboard.
+- Thiết kế luồng đăng nhập mô phỏng, phân quyền sinh viên và quản trị viên.
+- Chuẩn hóa cấu trúc metadata tài liệu phục vụ tìm kiếm, quản lý và kiểm duyệt.
+- Chuẩn bị luồng upload theo mô hình presigned URL.
+- Hỗ trợ tích hợp backend Express với PostgreSQL và S3 ở mức phù hợp cho demo.
 
-**Yêu cầu kỹ thuật**
+Điều này cũng có nghĩa là không phải mọi thành phần trong sơ đồ kiến trúc đều đã được triển khai đầy đủ 100%. Một số dịch vụ như SQS, CloudWatch, SNS hoặc Glacier hiện đóng vai trò định hướng mở rộng hợp lý hơn là phần đã hoàn thiện hoàn toàn. Việc trình bày rõ như vậy giúp báo cáo trung thực hơn với phạm vi thực tế.
 
-- **Frontend:** React Context API, bất đồng bộ với Fetch/Axios, xử lý form, preview tài liệu.
-- **Backend/Cloud:** Node.js, AWS SDK, S3 Presigned URL, SQS, RDS PostgreSQL, Full-text Search, IAM, Security Groups và các nguyên lý mạng AWS cơ bản.
+### 6. Lộ trình phát triển đề xuất
+**Giai đoạn 1: Hoàn thiện sản phẩm lõi**
 
-### 5. Lộ trình và mốc triển khai
-- **Tháng 1:** Khảo sát yêu cầu, thiết kế sơ đồ hệ thống, dựng giao diện ban đầu trên Figma.
-- **Tháng 2:** Khởi tạo VPC, ALB, EC2, RDS PostgreSQL, S3 và xây dựng luồng upload trực tiếp.
-- **Tháng 3:** Tích hợp SQS Worker, Full-text Search, CloudWatch, SNS, kiểm thử toàn hệ thống và quay video demo.
+- Ổn định trải nghiệm tìm kiếm, upload, preview và điều hướng người dùng.
+- Chuẩn hóa metadata và quy trình duyệt tài liệu.
+- Hoàn thiện dashboard quản trị và thống kê cơ bản.
 
-### 6. Ước tính ngân sách
-- **Amazon EC2 (2 máy nhỏ Multi-AZ):** Tối ưu trong giới hạn học tập và có thể tận dụng Free Tier ở giai đoạn đầu.
-- **Amazon RDS PostgreSQL:** Có thể triển khai kích thước nhỏ để tiết kiệm chi phí trong giai đoạn demo.
-- **Application Load Balancer:** Là thành phần chi phí chính để duy trì mô hình High Availability.
-- **Amazon S3 và S3 Glacier:** Chi phí thấp, tối ưu tốt nhờ Lifecycle Policy.
-- **Amazon SQS, CloudWatch và SNS:** Chi phí nhỏ trong quy mô sử dụng hiện tại.
+**Giai đoạn 2: Tích hợp cloud thực tế**
 
-**Tổng chi phí dự kiến:** khoảng 20 đến 25 USD mỗi tháng, chủ yếu tập trung ở ALB và cơ sở dữ liệu RDS.
+- Kết nối ổn định hơn giữa frontend, backend Express và PostgreSQL.
+- Hoàn thiện upload trực tiếp lên S3 bằng presigned URL.
+- Chuẩn hóa môi trường cấu hình và kiểm thử end-to-end.
 
-### 7. Đánh giá rủi ro
-| Rủi ro | Mức độ ảnh hưởng | Xác suất | Chiến lược giảm thiểu |
-| --- | --- | --- | --- |
-| Sự cố hạ tầng cục bộ | Rất cao | Thấp | Triển khai Multi-AZ để tăng khả năng dự phòng |
-| EC2 quá tải khi truy cập tăng đột biến | Cao | Trung bình | Sử dụng ALB kết hợp giám sát CloudWatch |
-| Nghẽn băng thông do upload tệp lớn | Trung bình | Cao | Dùng Presigned URL và giới hạn dung lượng tải lên |
-| Mất dữ liệu xử lý nền | Cao | Thấp | Tách hàng đợi xử lý bằng Amazon SQS |
+**Giai đoạn 3: Mở rộng hệ thống**
 
-### 8. Kết quả kỳ vọng
-**Về kỹ thuật:** Xây dựng thành công một nền tảng CloudDoc chạy trên kiến trúc AWS hiện đại, có tính sẵn sàng cao, bảo mật tốt và hỗ trợ tìm kiếm nội dung tài liệu hiệu quả.
+- Bổ sung background processing cho các tác vụ nặng hoặc bất đồng bộ.
+- Thêm monitoring, alerting và logging cho môi trường sẵn sàng triển khai.
+- Tối ưu chi phí bằng lifecycle policy và phân tầng dữ liệu lâu năm.
 
-**Về giá trị:** Hệ thống giúp sinh viên HUTECH tra cứu tài liệu học tập tập trung và nhanh chóng, đồng thời thể hiện rõ năng lực thiết kế hệ thống cloud chuyên nghiệp của nhóm phát triển.
+### 7. Dự toán ngân sách và chi phí vận hành
+Ảnh dưới đây là bản ước lượng chi phí tháng cho kiến trúc CloudDoc theo mô hình gần production, được tổng hợp từ AWS Pricing Calculator và xuất vào ngày **17/06/2026**:
+
+![CloudDoc AWS Monthly Cost](/fcaj/images/2-Proposal/aws-monthly-cost-cloudoc.jpg)
+
+| Hạng mục | Chi phí ước tính / tháng (USD) | Ghi chú |
+| --- | ---: | --- |
+| RDS PostgreSQL Multi-AZ | 85.50 | Thành phần chiếm tỷ trọng lớn nhất vì ưu tiên tính sẵn sàng |
+| EC2 Server (t4g.micro x2) | 19.51 | Hai máy ứng dụng ở hai AZ |
+| Application Load Balancer | 18.98 | Phân phối tải và đảm bảo điểm vào thống nhất |
+| NAT Instance (t4g.nano) | 4.64 | Hỗ trợ outbound traffic cho private subnet |
+| CloudWatch | 4.01 | Metric, log và alarm cơ bản |
+| Khác (SNS, CloudFront) | 0.89 | Chi phí nhỏ cho cảnh báo và phân phối nội dung |
+| **Tổng cộng** | **133.53** | Mức chi phí tham chiếu cho kiến trúc định hướng |
+
+Mức chi phí trên phù hợp hơn với một kiến trúc định hướng production hoặc demo hoàn chỉnh, không phải cấu hình tối thiểu cho môi trường học tập. Đối với giai đoạn thực tập hoặc thử nghiệm, nhóm có thể giảm chi phí bằng các cách sau:
+
+- Dùng cấu hình đơn AZ cho môi trường dev/test trước khi cần mức sẵn sàng cao hơn.
+- Tắt hoặc thu nhỏ EC2 khi không cần chạy liên tục.
+- Tận dụng S3 lifecycle để chuyển dữ liệu ít dùng sang Glacier.
+- Chỉ bật CloudWatch log chi tiết cho các thành phần thật sự cần theo dõi.
+- Tận dụng IAM Role và S3 Gateway Endpoint để giảm rủi ro cấu hình sai thay vì hard-code access key.
+
+### 8. Rủi ro và phương án giảm thiểu
+| Rủi ro | Tác động | Cách giảm thiểu |
+| --- | --- | --- |
+| Sai lệch giữa frontend, backend và luồng presigned URL | Upload lỗi, dữ liệu không đồng bộ | Chuẩn hóa API contract, test từng bước và test end-to-end trước khi demo |
+| Metadata không nhất quán hoặc thiếu kiểm duyệt | Tìm kiếm kém hiệu quả, tài liệu lộn xộn | Định nghĩa metadata bắt buộc, thêm trạng thái duyệt và quy trình admin review |
+| Cấu hình quyền truy cập AWS chưa chặt chẽ | Rò rỉ dữ liệu hoặc thao tác vượt quyền | Áp dụng IAM Role, Principle of Least Privilege và tránh hard-code key trong source code |
+| Chi phí tăng cao nếu giữ kiến trúc lớn cho môi trường dev | Lãng phí ngân sách khi hệ thống chưa có tải thật | Phân tách môi trường dev/demo, giảm tài nguyên và theo dõi cost định kỳ |
+| Thiếu quan sát vận hành khi hệ thống lỗi | Khó phát hiện và xử lý sự cố kịp thời | Thiết lập metric, log, CloudWatch Alarm và SNS notification cho các điểm quan trọng |
+| Phạm vi thực tập không đủ để hoàn thiện toàn bộ kiến trúc | Báo cáo dễ bị hiểu là overclaim | Ghi rõ phần nào đã làm, phần nào là định hướng mở rộng và minh họa bằng roadmap |
+
+### 9. Giá trị mang lại
+CloudDoc mang lại giá trị ở cả ba góc độ:
+
+- **Đối với người dùng cuối:** sinh viên có một nơi tập trung để tìm kiếm và khai thác tài liệu nhanh hơn, đáng tin cậy hơn.
+- **Đối với nhóm phát triển:** dự án kết nối frontend, backend, metadata design và tư duy kiến trúc cloud trong cùng một sản phẩm.
+- **Đối với định hướng học tập:** dự án là cầu nối giữa UI/UX, nghiệp vụ thực tế và triển khai hệ thống trên AWS.
+
+Từ góc nhìn cá nhân, bản đề xuất này cũng phản ánh quá trình tôi chuyển từ suy nghĩ làm giao diện cho đẹp sang thiết kế trải nghiệm phải đi cùng luồng dữ liệu, bảo mật, chi phí và vận hành hệ thống. Đó là giá trị học tập lớn nhất mà CloudDoc mang lại cho tôi trong kỳ thực tập này.

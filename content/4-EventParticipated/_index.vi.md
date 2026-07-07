@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Các events đã tham gia"
 date: 2024-01-01
 weight: 4
@@ -6,38 +6,34 @@ chapter: false
 pre: " <b> 4. </b> "
 ---
 
-> Trong phần này, các bạn cần liệt kê và mô tả chi tiết các sự kiện (event) mà mình đã tham gia trong suốt quá trình thực tập hoặc làm việc. 
-> 
-> Mỗi sự kiện nên được trình bày theo định dạng Event 1, Event 2, Event 3…, kèm theo các thông tin:
-> * Tên sự kiện
-> * Thời gian tổ chức
-> * Địa điểm (nếu có)
-> * Vai trò của bạn trong sự kiện (người tham dự, hỗ trợ tổ chức, diễn giả, v.v.)
-> * Mô tả ngắn gọn nội dung và hoạt động chính trong sự kiện
-> * Kết quả hoặc giá trị đạt được (bài học, kỹ năng mới, đóng góp cho nhóm/dự án)
-> * Việc liệt kê này giúp thể hiện rõ sự tham gia thực tế của bạn, cũng như các kỹ năng mềm và kinh nghiệm bạn đã tích lũy qua từng sự kiện.
+Bên cạnh thời gian học tập và phát triển dự án CloudDoc, tôi còn tham gia các workshop và sự kiện công nghệ trong khuôn khổ FCAJ. Đây là phần rất có giá trị vì nó giúp tôi không chỉ học theo một tuyến nội dung cố định, mà còn được tiếp cận thêm với các chủ đề mới như GenAI, hiện đại hóa ứng dụng, cơ sở dữ liệu, bảo mật, cost optimization và tự động hóa vận hành trên AWS.
 
+Các sự kiện này đóng vai trò mở rộng góc nhìn. Trong quá trình làm dự án, tôi thường tập trung nhiều vào giao diện, dữ liệu tài liệu, luồng người dùng và phần tích hợp backend. Khi tham gia workshop, tôi được nhìn vấn đề ở quy mô rộng hơn: doanh nghiệp đang ứng dụng AI như thế nào, hệ thống được hiện đại hóa ra sao, cloud được dùng để giải quyết performance, monitoring, security và cost control như thế nào. Điều đó giúp tôi hiểu rõ hơn bối cảnh thực tế mà các công nghệ mình đang học được sử dụng.
 
-Trong quá trình thực tập, em đã tham gia 2 events, với mỗi event là một trải nghiệm đáng nhớ với những kiến thức mới, hay và bổ ích, cùng với đó là nhứng món quà và những khoảnh khắc rất tuyệt vời.
+### Ý nghĩa của phần event trong kỳ thực tập
 
-### [Event 1](4.1-Event1/)
-&emsp;**Tên sự kiện:** Hội thảo: Trợ lý AI Doanh nghiệp và Tự động hóa kiểm toán hạ tầng AWS với GenAI
+- Giúp cập nhật xu hướng công nghệ mới thay vì chỉ học lý thuyết nền tảng.
+- Tạo cơ hội kết nối kiến thức dự án với các bài toán thực tế ở doanh nghiệp.
+- Mở rộng hiểu biết về GenAI, application modernization, observability và kiến trúc AWS.
+- Rèn thói quen lắng nghe, ghi chú, tổng hợp và phản tư sau mỗi buổi workshop.
 
-&emsp;**Thời gian:** 09:00 ngày 23/05/2026
+### Cách tôi tiếp cận các workshop
 
-&emsp;**Địa điểm:** Tầng 26, Tòa nhà Bitexco, số 02 đường Hải Triều, phường Bến Nghé, Quận 1, TP. Hồ Chí Minh
+Sau mỗi buổi tham gia, tôi thường tự tổng hợp theo ba câu hỏi:
 
-&emsp;**Vai trò trong sự kiện:** Người tham dự 
+1. Nội dung chính của workshop là gì?
+2. Điều gì có thể liên hệ trực tiếp hoặc gián tiếp với dự án CloudDoc?
+3. Kiến thức nào đáng để tìm hiểu sâu thêm sau buổi đó?
 
+Cách tiếp cận này giúp phần event không chỉ là điểm danh đã tham gia, mà thực sự trở thành một phần của quá trình học tập và phát triển tư duy kỹ thuật.
 
+### Các sự kiện tiêu biểu đã tham gia
 
-### [Event 2](4.2-Event2/)
-&emsp;**Tên sự kiện:** Hội thảo: Hiện đại hóa Ứng dụng và Cơ sở dữ liệu với nền tảng GenAI
+- [4.1 - Sự kiện 1: AWS Vietnam Community Day tháng 5 - AI, CloudFront và Multi-Agent Systems](4.1-event1/)
+- [4.2 - Hội thảo: Hiện đại hóa ứng dụng và cơ sở dữ liệu với nền tảng GenAI](4.2-event2/)
 
-&emsp;**Thời gian:** 09:00 ngày 30/05/2026
+### Giá trị rút ra
 
-&emsp;**Địa điểm:** Tầng 26, Tòa nhà Bitexco, số 02 đường Hải Triều, phường Bến Nghé, Quận 1, TP. Hồ Chí Minh
+Sau khi tham gia các sự kiện này, tôi hiểu rõ hơn rằng việc phát triển phần mềm không chỉ xoay quanh viết code cho một tính năng riêng lẻ. Một sản phẩm tốt còn phải gắn với cách dữ liệu được quản lý, cách hạ tầng được theo dõi, cách chi phí được kiểm soát và cách công nghệ mới như AI được đưa vào quy trình làm việc một cách thực tế.
 
-&emsp;**Vai trò trong sự kiện:** Người tham dự 
-
-
+Với cá nhân tôi, phần event giúp cân bằng giữa làm dự án và mở rộng góc nhìn. Nó giúp tôi không bị bó hẹp trong phạm vi frontend, mà có thêm động lực để hiểu sâu hơn về backend, dữ liệu và kiến trúc AWS trong tương lai.

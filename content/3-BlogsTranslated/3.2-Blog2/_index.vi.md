@@ -1,124 +1,62 @@
-﻿---
+---
 title: "Blog 2"
 date: 2024-01-01
-weight: 1
+weight: 2
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
+# Nhúng trợ lý GenAI vào ứng dụng nội bộ với AWS Amplify, AWS CDK và Amazon Q Business
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+![Minh họa Blog 2](/fcaj/images/3-BlogsTranslated/blog2-doc-image.png)
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+Blog thứ hai tôi chọn dịch nói về một nhu cầu đang ngày càng phổ biến trong doanh nghiệp: làm sao để người dùng có thể hỏi đáp bằng ngôn ngữ tự nhiên trên chính kho tài liệu nội bộ của tổ chức, thay vì phải tự đi tìm từng file hoặc từng thư mục. AWS giới thiệu một cách tiếp cận sử dụng **Amazon Q Business**, **AWS Amplify Gen 2** và **AWS CDK** để xây dựng mô hình này khá nhanh mà vẫn có kiểm soát quyền truy cập.
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+Đây là bài viết khiến tôi quan tâm nhiều vì nó liên quan trực tiếp đến bài toán khai thác tri thức từ tài liệu, vốn cũng là một hướng phát triển tiềm năng cho CloudDoc nếu hệ thống được mở rộng sau này.
 
----
+### 1. Tổng quan giải pháp
 
-## Hướng dẫn kiến trúc
+Kiến trúc trong bài sử dụng:
 
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
+- **Amazon Q Business** để cung cấp khả năng hỏi đáp dựa trên dữ liệu nội bộ.
+- **AWS Amplify Gen 2** để xây dựng và triển khai ứng dụng web.
+- **AWS CDK** để quản lý hạ tầng dưới dạng mã nguồn.
+- **Amazon Cognito** và **IAM Identity Center** để xác thực và phân quyền.
+- **Amazon S3** để lưu trữ tài liệu phục vụ quá trình lập chỉ mục dữ liệu.
 
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
+Điểm tôi thấy đáng chú ý là mô hình này không yêu cầu phải tự xây dựng toàn bộ nền tảng AI từ đầu. Thay vào đó, doanh nghiệp có thể tận dụng các dịch vụ được AWS cung cấp sẵn và tập trung hơn vào luồng sử dụng thực tế.
 
-**Kiến trúc giải pháp bây giờ như sau:**
+### 2. Kiến trúc hoạt động
 
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
+Luồng chính của hệ thống được mô tả như sau:
 
----
+1. Người dùng đăng nhập vào ứng dụng thông qua Cognito.
+2. Tài liệu nội bộ được lưu trên Amazon S3.
+3. Amazon Q Business được cấp quyền truy cập và lập chỉ mục dữ liệu từ S3.
+4. Giao diện chat được nhúng trực tiếp vào ứng dụng web.
+5. Người dùng đặt câu hỏi và nhận câu trả lời dựa trên dữ liệu doanh nghiệp, kèm nguồn tham chiếu.
 
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
+Từ góc nhìn sản phẩm, điều này rất quan trọng vì nó biến kho tài liệu tĩnh thành một hệ thống có thể hỗ trợ tra cứu chủ động hơn.
 
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+### 3. Điểm nổi bật của bài blog
 
----
+Có ba điểm tôi ghi nhận rõ nhất:
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+- **Hạ tầng được quản lý bằng AWS CDK:** giảm cấu hình thủ công và giúp tái sử dụng tốt hơn giữa các môi trường.
+- **AI được gắn với dữ liệu nội bộ thật:** thay vì chỉ là chatbot chung chung, hệ thống trả lời dựa trên tài liệu doanh nghiệp đã được lập chỉ mục.
+- **Quyền truy cập được kiểm soát:** vì bài toán dữ liệu nội bộ luôn gắn với bảo mật, nên việc đi cùng Cognito và IAM Identity Center là rất cần thiết.
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+### 4. Điều tôi học được từ bài blog
 
----
+Sau khi dịch bài này, tôi nhận ra rằng giá trị của AI trong ứng dụng không chỉ nằm ở phần sinh câu trả lời, mà còn nằm ở phần tổ chức dữ liệu đủ tốt để AI có thể trả lời đúng ngữ cảnh. Điều này liên hệ rất mạnh tới CloudDoc, vì nếu metadata tài liệu không chuẩn, cấu trúc lưu trữ không rõ ràng và quyền truy cập không được quản lý tốt, thì một tính năng AI về sau cũng khó hoạt động hiệu quả.
 
-## The pub/sub hub
+### 5. Liên hệ với CloudDoc
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
+- Nếu CloudDoc phát triển thêm trong tương lai, Amazon Q Business hoặc một mô hình hỏi đáp tương tự có thể trở thành hướng mở rộng phù hợp.
+- Metadata tài liệu và cấu trúc phân loại trong CloudDoc chính là nền tảng để các chức năng AI có thể hoạt động tốt.
+- Việc kết hợp giao diện ứng dụng với tri thức nội bộ là hướng rất đáng tham khảo cho bài toán tra cứu học liệu thông minh.
 
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+### 6. Kết luận
 
----
+Việc tích hợp trợ lý AI vào các ứng dụng nội bộ đang trở thành nhu cầu phổ biến ở nhiều tổ chức. Kiến trúc sử dụng Amazon Q Business, Amplify và CDK là một cách tiếp cận đáng tham khảo cho các hệ thống cần khai thác tri thức từ tài liệu một cách an toàn, có kiểm soát và có khả năng mở rộng.
 
-## Core microservice
-
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
-
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
-
----
-
-## Front door microservice
-
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
-
----
-
-## Staging ER7 microservice
-
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
-
----
-
-## Tính năng mới trong giải pháp
-
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
-
+**Link bài đăng trong nhóm FCAJ:** https://www.facebook.com/share/p/1BkgmtmwUw/

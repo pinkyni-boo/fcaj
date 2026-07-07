@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Translated Blogs"
 date: 2024-01-01
 weight: 3
@@ -6,23 +6,23 @@ chapter: false
 pre: " <b> 3. </b> "
 ---
 
-This section will list and introduce the blogs you have translated. For example:
+During the FCAJ program, I did not only work on CloudDoc as a project. I also spent time reading, translating, and summarizing English technical blogs related to AWS Amplify, GenAI integration, secure AWS access, and user experience in modern applications. This part of the internship was important because it helped me learn from original AWS materials and explain the ideas again in Vietnamese.
 
-###  [Blog 1 - Getting started with healthcare data lakes: Using microservices](3.1-Blog1/)
-This blog introduces how to start building a data lake in the healthcare sector by applying a microservices architecture. You will learn why data lakes are important for storing and analyzing diverse healthcare data (electronic medical records, lab test data, medical IoT devices…), how microservices help make the system more flexible, scalable, and easier to maintain. The article also guides you through the steps to set up the environment, organize the data processing pipeline, and ensure compliance with security & privacy standards such as HIPAA.
+The three blogs I selected in this phase all connect well to CloudDoc: building better user experience under unstable network conditions, embedding AI assistants into internal applications, and accessing AWS resources securely without hard-coded credentials. These topics were useful not only as reading practice, but also as architecture inspiration for future product improvements.
 
-###  [Blog 2 - ...](3.2-Blog2/)
-This blog introduces how to start building a data lake in the healthcare sector by applying a microservices architecture. You will learn why data lakes are important for storing and analyzing diverse healthcare data (electronic medical records, lab test data, medical IoT devices…), how microservices help make the system more flexible, scalable, and easier to maintain. The article also guides you through the steps to set up the environment, organize the data processing pipeline, and ensure compliance with security & privacy standards such as HIPAA.
+### Goals of this section
 
-###  [Blog 3 - ...](3.3-Blog3/)
-This blog introduces how to start building a data lake in the healthcare sector by applying a microservices architecture. You will learn why data lakes are important for storing and analyzing diverse healthcare data (electronic medical records, lab test data, medical IoT devices…), how microservices help make the system more flexible, scalable, and easier to maintain. The article also guides you through the steps to set up the environment, organize the data processing pipeline, and ensure compliance with security & privacy standards such as HIPAA.
+- Improve reading comprehension of English technical materials from AWS sources.
+- Expand my understanding of modern application architecture, GenAI, and cloud security.
+- Practice explaining technical ideas clearly in Vietnamese.
+- Build the habit of learning through official technical blog content.
 
-###  [Blog 4 - ...](3.4-Blog4/)
-This blog introduces how to start building a data lake in the healthcare sector by applying a microservices architecture. You will learn why data lakes are important for storing and analyzing diverse healthcare data (electronic medical records, lab test data, medical IoT devices…), how microservices help make the system more flexible, scalable, and easier to maintain. The article also guides you through the steps to set up the environment, organize the data processing pipeline, and ensure compliance with security & privacy standards such as HIPAA.
+### What I learned
 
-###  [Blog 5 - ...](3.5-Blog5/)
-This blog introduces how to start building a data lake in the healthcare sector by applying a microservices architecture. You will learn why data lakes are important for storing and analyzing diverse healthcare data (electronic medical records, lab test data, medical IoT devices…), how microservices help make the system more flexible, scalable, and easier to maintain. The article also guides you through the steps to set up the environment, organize the data processing pipeline, and ensure compliance with security & privacy standards such as HIPAA.
+Through translating these three blogs, I became more confident in identifying the main architectural ideas quickly and relating them to practical implementation work. Because my role in CloudDoc focused on frontend and backend support, this activity helped me see more clearly how user experience depends on data flow, permissions, and system design behind the interface.
 
-###  [Blog 6 - ...](3.6-Blog6/)
-This blog introduces how to start building a data lake in the healthcare sector by applying a microservices architecture. You will learn why data lakes are important for storing and analyzing diverse healthcare data (electronic medical records, lab test data, medical IoT devices…), how microservices help make the system more flexible, scalable, and easier to maintain. The article also guides you through the steps to set up the environment, organize the data processing pipeline, and ensure compliance with security & privacy standards such as HIPAA.
+### List of the 3 translated blogs
 
+- [Blog 1](3.1-blog1/): building an offline-first application with AWS Amplify, TanStack Query, AppSync, and MongoDB Atlas.
+- [Blog 2](3.2-blog2/): embedding a GenAI assistant into internal applications with AWS Amplify, AWS CDK, and Amazon Q Business.
+- [Blog 3](3.3-blog3/): using IAM Compute Roles for server-side rendering applications on AWS Amplify Hosting.

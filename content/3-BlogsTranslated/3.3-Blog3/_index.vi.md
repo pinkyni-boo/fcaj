@@ -1,124 +1,58 @@
-﻿---
+---
 title: "Blog 3"
 date: 2024-01-01
-weight: 1
+weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
+# Tích hợp IAM Compute Roles cho ứng dụng Server-Side Rendering trên AWS Amplify Hosting
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+Blog thứ ba tôi chọn dịch nói về một vấn đề bảo mật và vận hành rất thiết thực: khi xây dựng các ứng dụng server-side rendering như **Next.js** hoặc **Nuxt** trên AWS, làm sao để phần server của ứng dụng có thể truy cập tài nguyên AWS một cách an toàn mà không cần lưu `Access Key` hoặc `Secret Key` trong source code hay biến môi trường.
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+AWS đã giới thiệu tính năng **IAM Compute Roles** cho **AWS Amplify Hosting** để giải quyết nhu cầu này. Đây là một điểm tôi đánh giá rất đáng học vì nó gắn trực tiếp với yêu cầu bảo mật mà bất kỳ hệ thống cloud nào cũng cần quan tâm.
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+### 1. IAM Compute Roles là gì?
 
----
+IAM Compute Roles cho phép gắn trực tiếp một **IAM Role** vào môi trường thực thi của ứng dụng SSR chạy trên Amplify Hosting. Nhờ đó, code phía server có thể truy cập các dịch vụ AWS thông qua cơ chế cấp quyền tạm thời, tương tự như cách **EC2 Instance Profile** hoặc **Lambda Execution Role** hoạt động.
 
-## Hướng dẫn kiến trúc
+Ý nghĩa lớn nhất của cơ chế này là:
 
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
+- Không cần hard-code access key trong ứng dụng.
+- Dễ kiểm soát quyền truy cập theo từng môi trường.
+- Phù hợp hơn với nguyên tắc **Principle of Least Privilege**.
 
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
+### 2. Các trường hợp sử dụng phổ biến
 
-**Kiến trúc giải pháp bây giờ như sau:**
+Theo bài viết, IAM Compute Roles đặc biệt phù hợp trong các trường hợp:
 
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
+- Truy cập **AWS Secrets Manager** hoặc **Systems Manager Parameter Store** để lấy thông tin cấu hình.
+- Kết nối tới **Amazon RDS** hoặc **Amazon DynamoDB** mà không phải lưu credentials trong ứng dụng.
+- Gọi API của các dịch vụ AWS từ phía server.
+- Thiết lập quyền truy cập khác nhau cho development, staging và production.
 
----
+### 3. Ví dụ triển khai
 
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
+Trong ví dụ của AWS, ứng dụng **Next.js** được cấu hình để truy cập một **Amazon S3 bucket** ở chế độ private. Quy trình chính gồm:
 
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+1. Tạo IAM Role có quyền đọc dữ liệu từ S3.
+2. Cấp quyền để Amplify Hosting sử dụng role đó.
+3. Triển khai ứng dụng Next.js lên Amplify.
+4. Dùng AWS SDK trong API Route để truy cập dữ liệu từ S3.
 
----
+Nhờ IAM Compute Roles, ứng dụng có thể xác thực với AWS mà không cần lưu thông tin nhạy cảm trong source code.
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+### 4. Điều tôi học được từ bài blog
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+Bài viết này giúp tôi hiểu rõ hơn rằng bảo mật trong cloud không chỉ nằm ở firewall hay private subnet, mà còn nằm ở cách ứng dụng nhận quyền truy cập tài nguyên. Với vai trò làm frontend và hỗ trợ backend cho CloudDoc, tôi thấy đây là bài học rất quan trọng, vì khi hệ thống phát triển lên các môi trường triển khai thật thì việc quản lý credential và quyền truy cập phải được xử lý bài bản ngay từ đầu.
 
----
+### 5. Liên hệ với CloudDoc
 
-## The pub/sub hub
+- CloudDoc nên ưu tiên tư duy dùng **IAM Role** thay vì hard-code access key nếu triển khai trên AWS.
+- Các luồng như upload file, lấy presigned URL hoặc truy cập tài nguyên riêng đều cần được thiết kế theo hướng cấp quyền an toàn.
+- Bài blog này cũng củng cố thêm phần checklist chấm điểm liên quan tới bảo mật và **least privilege** trong báo cáo FCAJ.
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
+### 6. Kết luận
 
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+IAM Compute Roles giúp đơn giản hóa việc quản lý quyền truy cập AWS cho các ứng dụng SSR trên Amplify Hosting. Đây là một tính năng rất hữu ích cho các hệ thống cần truy cập tài nguyên AWS từ phía server nhưng vẫn muốn đảm bảo nguyên tắc bảo mật và quản trị quyền truy cập rõ ràng.
 
----
-
-## Core microservice
-
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
-
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
-
----
-
-## Front door microservice
-
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
-
----
-
-## Staging ER7 microservice
-
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
-
----
-
-## Tính năng mới trong giải pháp
-
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
-
+**Link bài đăng trong nhóm FCAJ:** https://www.facebook.com/share/p/1PEvrCKJsS/

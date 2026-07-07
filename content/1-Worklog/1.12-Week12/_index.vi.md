@@ -1,55 +1,27 @@
-﻿---
-title: "Worklog Tuần 12"
+---
+title: "Hỗ trợ tích hợp Backend AWS, kiểm thử end-to-end và tổng kết dự án"
 date: 2024-01-01
-weight: 2
+weight: 1
 chapter: false
-pre: " <b> 1.12 </b> "
+pre: " <b> 1.12. </b> "
 ---
 ### Mục tiêu tuần 12:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+- Hỗ trợ tích hợp frontend với backend thật của CloudDoc dùng Express, PostgreSQL và S3 presigned URL.
+- Kiểm thử xuyên suốt các luồng upload, lưu metadata, preview và download để giảm lỗi trước khi demo.
+- Tổng hợp kết quả thực tập, hoàn thiện báo cáo FCAJ và rút kinh nghiệm cho giai đoạn phát triển tiếp theo.
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+### Các công việc triển khai trong tuần:
+| Ngày | Công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
+| --- | --- | --- | --- | --- |
+| 1 | Làm việc cùng backend để rà soát API tạo presigned upload URL, lưu metadata và lấy link download. | 06/07/2026 | 06/07/2026 |  |
+| 2 | Tích hợp thử frontend với các endpoint backend, xử lý lỗi CORS, biến môi trường và trạng thái phản hồi. | 07/07/2026 | 07/07/2026 |  |
+| 3 | Kiểm tra lại luồng upload trực tiếp lên S3, sau đó lưu dữ liệu tài liệu về PostgreSQL để đảm bảo logic end-to-end. | 08/07/2026 | 08/07/2026 |  |
+| 4 | Thực hiện test các trường hợp preview, download, phân quyền truy cập và màn hình admin. | 09/07/2026 | 09/07/2026 |  |
+| 5 | Tổng kết kết quả dự án, cập nhật proposal và hoàn thiện nội dung báo cáo thực tập. | 10/07/2026 | 10/07/2026 |  |
 
+### Kết quả đạt được trong tuần 12:
 
-### Kết quả đạt được tuần 12:
-
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
-
+- Frontend đã được chuẩn bị tốt để làm việc với backend Express sử dụng PostgreSQL và S3 presigned URL.
+- Tôi hiểu rõ hơn mối liên kết giữa giao diện người dùng, API, lưu trữ tài liệu và cấu hình hạ tầng AWS.
+- Báo cáo thực tập được hoàn thiện theo đúng định hướng dự án CloudDoc, phản ánh rõ vai trò frontend và phần hỗ trợ backend của tôi.

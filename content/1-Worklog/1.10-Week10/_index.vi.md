@@ -1,55 +1,27 @@
-﻿---
-title: "Worklog Tuần 10"
+---
+title: "Hoàn thiện luồng người dùng, phân quyền và kiểm duyệt tài liệu"
 date: 2024-01-01
-weight: 2
+weight: 1
 chapter: false
 pre: " <b> 1.10. </b> "
 ---
 ### Mục tiêu tuần 10:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+- Hoàn thiện các chức năng liên quan đến đăng nhập mô phỏng, phân quyền người dùng và trải nghiệm đóng góp tài liệu.
+- Xây dựng luồng kiểm duyệt tài liệu phù hợp với bài toán sinh viên đăng tải và quản trị viên xét duyệt.
+- Tạo nền tảng cho dashboard quản trị và các thao tác quản lý tài liệu sau này.
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+### Các công việc triển khai trong tuần:
+| Ngày | Công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
+| --- | --- | --- | --- | --- |
+| 1 | Thiết kế lại flow đăng nhập nhanh theo vai trò sinh viên và quản trị viên để phục vụ demo hệ thống. | 22/06/2026 | 22/06/2026 |  |
+| 2 | Hoàn thiện trang upload tài liệu với metadata bắt buộc, kéo thả tệp và thông báo tiến trình tải lên. | 23/06/2026 | 23/06/2026 |  |
+| 3 | Bổ sung logic phân quyền route: khách chỉ xem tài liệu, người dùng đăng nhập mới được đóng góp, admin có khu vực riêng. | 24/06/2026 | 24/06/2026 |  |
+| 4 | Xây dựng mô hình trạng thái tài liệu gồm pending, approved và rejected để hỗ trợ quy trình duyệt. | 25/06/2026 | 25/06/2026 |  |
+| 5 | Thảo luận với nhóm backend về dữ liệu cần trao đổi giữa frontend và API cho upload, lưu metadata và duyệt tài liệu. | 26/06/2026 | 26/06/2026 |  |
 
+### Kết quả đạt được trong tuần 10:
 
-### Kết quả đạt được tuần 10:
-
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
-
+- Luồng người dùng của CloudDoc trở nên rõ ràng hơn, thể hiện đúng vai trò sinh viên và quản trị viên.
+- Màn hình upload và quy trình kiểm duyệt được mô hình hóa đầy đủ để sẵn sàng tích hợp backend.
+- Frontend và backend thống nhất tốt hơn về cấu trúc dữ liệu tài liệu, trạng thái duyệt và các endpoint cần thiết.

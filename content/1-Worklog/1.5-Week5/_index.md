@@ -1,4 +1,4 @@
-﻿---
+---
 title: "In-office learning and frontend technical solution research"
 date: 2024-01-01
 weight: 1

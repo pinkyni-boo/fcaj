@@ -1,123 +1,73 @@
-﻿---
+---
 title: "Blog 1"
 date: 2024-01-01
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-# Getting Started with Healthcare Data Lakes: Using Microservices
+# Building an Offline-First Application with AWS Amplify, TanStack Query, AppSync, and MongoDB Atlas
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+![Blog 1 Illustration](/fcaj/images/3-BlogsTranslated/blog1-doc-image.png)
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+The first blog I translated focused on a very practical product problem: how to keep a web or mobile application smooth even when network connectivity is unstable or temporarily unavailable. Instead of waiting for the server to respond before updating the interface, an offline-first architecture combined with optimistic UI allows users to see immediate feedback while synchronization happens in the background.
 
----
+The AWS article presented a solution built with **AWS Amplify Gen 2**, **AWS AppSync**, **TanStack Query**, and **MongoDB Atlas**. I found this approach useful because it balances both user experience and data synchronization reliability.
 
-## Architecture Guidance
+### 1. Solution overview
 
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
+The architecture described in the blog uses:
 
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
+- **AWS Amplify Gen 2** for full-stack application setup and deployment.
+- **AWS AppSync** to provide the GraphQL API used for synchronization.
+- **TanStack Query** for client-side caching, optimistic updates, and rollback handling.
+- **MongoDB Atlas** as the backend database.
+- **AWS Lambda** for serverless processing and **Amazon Cognito** for user authentication.
 
-**The solution architecture is now as follows:**
+One strong idea here is that the client does not stay passive. It actively manages local state and gives earlier feedback to the user.
 
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
+### 2. How optimistic UI works
 
----
+Instead of waiting for a server response before updating the interface, optimistic UI lets the application display the expected result immediately after the user takes action. In a to-do application example:
 
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
+- The user creates a new task.
+- The interface shows that task immediately.
+- The request is then sent to AppSync to persist the data.
+- If the request succeeds, the state remains synchronized.
+- If the request fails or the connection is lost, the previous state is restored through rollback.
 
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
+This reduces the feeling of delay and makes the application feel more responsive, especially under unstable connectivity.
 
----
+### 3. Main processing flow
 
-## Technology Choices and Communication Scope
+From the AWS article, I summarized the flow as:
 
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+1. The user creates or updates data.
+2. TanStack Query updates the local cache and reflects the result immediately in the UI.
+3. A GraphQL request is sent to AWS AppSync.
+4. AppSync processes the request and stores the data in MongoDB Atlas.
+5. If an error occurs, the cache is restored to the previous state.
 
----
+The AWS example also mentioned a **First-Come, First-Served** conflict-handling approach to keep the synchronization behavior simpler.
 
-## The Pub/Sub Hub
+### 4. What I learned from this blog
 
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
+This article reminded me that user experience is not only about visual design. It also depends on how the system responds to user actions. From a frontend perspective in CloudDoc, offline-first and optimistic UI are highly relevant to flows such as:
 
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
+- document upload,
+- metadata editing,
+- moderation status updates,
+- and user profile changes.
 
----
+Even if CloudDoc does not yet implement a full offline-first model, understanding this pattern helps me design more realistic and responsive interaction flows.
 
-## Core Microservice
+### 5. Connection to CloudDoc
 
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
+- CloudDoc could apply optimistic UI ideas to improve responsiveness in upload and editing forms.
+- If the system later needs better support for unstable connections, offline-first thinking would become very valuable.
+- The AppSync-based synchronization model also suggests cleaner ways to organize client state in data-heavy applications.
 
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
+### 6. Conclusion
 
----
+Offline-first and optimistic UI are becoming important techniques for improving user experience in modern applications. With Amplify, AppSync, and TanStack Query, these patterns become easier to implement while still supporting reliable synchronization when connectivity returns.
 
-## Front Door Microservice
-
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
-
----
-
-## Staging ER7 Microservice
-
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
-
----
-
-## New Features in the Solution
-
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
-
+**FCAJ group post link:** https://www.facebook.com/groups/awsstudygroupfcj/permalink/2190116435086650/

@@ -5,90 +5,133 @@ weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-# Project Proposal: CloudDoc Platform for HUTECH Students
-## An Intelligent Learning Document Management and Retrieval System with a High-Availability AWS Architecture
+# Proposal: CloudDoc Platform for HUTECH Students
+## A document management and learning-resource discovery platform designed with AWS deployment in mind
 
-### 1. Executive Summary
-CloudDoc is designed to solve the problem of storing, managing, and searching learning materials such as slides, textbooks, and exam papers for HUTECH students. The platform delivers fast deep-content search while also protecting data through an isolated network architecture built around private subnets.
+### 1. Executive summary
+CloudDoc is a platform designed to help HUTECH students store, search, share, preview, and contribute academic materials such as slides, lecture notes, outlines, assignments, and exam resources. The goal is not simply to provide a place to upload files, but to build a structured, searchable, and moderated learning-resource library.
 
-The solution uses a modern AWS stack including an Application Load Balancer, Multi-AZ Amazon EC2 instances, Amazon RDS PostgreSQL, Amazon SQS, Amazon S3, CloudWatch, and SNS to achieve strong performance, high availability, and asynchronous processing. It also follows a FinOps mindset by automating storage lifecycle management from Amazon S3 to S3 Glacier for long-term cost optimization.
+During this internship, my main contribution focused on frontend development, while I also supported the team in aligning UI workflows with backend integration, metadata design, and AWS-oriented deployment thinking. Because of that, this proposal reflects both the product perspective and the system-design perspective needed to move CloudDoc beyond a classroom demo.
 
-### 2. Problem Statement
-**Current problem**
+The key idea behind the proposal is that CloudDoc should not be treated as a simple file-sharing website. Instead, it should be designed as a layered system where presentation, business logic, metadata management, and file storage are separated clearly enough to scale in future phases.
 
-Internal student document-sharing platforms are often deployed on single-server architectures, which makes them vulnerable to downtime during peak traffic periods such as exam season. Processing large PDF or Word files directly on the application server creates CPU bottlenecks and weakens the user experience. In addition, using a heavyweight external search stack for a school-level project is not always efficient, while keeping old documents in hot storage forever increases infrastructure costs unnecessarily.
+### 2. Context and practical need
+In many student environments, learning materials are scattered across personal drives, chat groups, temporary links, and loosely organized folders. This creates several practical issues:
 
-**Solution**
+- Students spend unnecessary time searching for the right file or the most reliable version.
+- Document quality is hard to control because there is no moderation flow or shared metadata standard.
+- Files are often duplicated, mislabeled, or lost when old links expire.
+- New users have difficulty identifying which resources are useful and trustworthy.
 
-CloudDoc applies a decoupled and highly available architecture:
+For HUTECH students, a centralized learning-resource platform would reduce friction, improve self-study, and create a more structured academic knowledge base. CloudDoc is proposed as a direct response to that need.
 
-- Users access the platform through an Application Load Balancer in a public subnet.
-- Amazon EC2 application servers and Amazon RDS PostgreSQL are isolated inside private subnets for stronger security.
-- Clients upload files directly to Amazon S3 using Presigned URLs instead of sending heavy files through the application server.
-- New S3 upload events are pushed into Amazon SQS so background EC2 workers can extract document text asynchronously.
-- Business data, metadata, and search data are stored centrally in Amazon RDS PostgreSQL, which also provides built-in full-text search capability.
-- CloudWatch and SNS are used to monitor system health and send alerts when resource usage crosses risk thresholds.
+### 3. Problem statement
+**Current challenges**
 
-**Benefits and return on investment**
+If the entire upload and download flow is routed through the application server, the backend quickly becomes a bottleneck as file size and user traffic increase. In addition, when file storage and metadata are not separated, it becomes harder to scale search, preview, moderation, and access-control features.
 
-The solution creates a centralized academic material portal that is fast, secure, and easy to scale. Automatically moving less frequently accessed files to S3 Glacier helps reduce storage cost. Direct upload to S3 lowers bandwidth and CPU pressure on EC2. Using PostgreSQL full-text search instead of a separate dedicated search cluster also helps keep infrastructure spending under control in the early stage of the project.
+Another important challenge is that many existing file-sharing setups only solve the store file problem, not the use the file effectively problem. Without structured metadata such as school, department, subject, uploader, approval status, and usage signals, document discovery becomes inefficient over time.
 
-### 3. Solution Architecture
-The platform is designed with a clear separation between the web access flow and the background processing flow, while also ensuring high availability through deployment across multiple Availability Zones.
+**Proposed solution**
 
-![CloudDoc AWS Architecture](/images/2-Proposal/clouddoc-architecture.png)
+CloudDoc is proposed with the following structure:
 
-### AWS Services Used
-- **VPC, Internet Gateway, and ALB:** Provide the secure network boundary and receive incoming Internet traffic.
-- **Amazon EC2 (Multi-AZ):** Run the Node.js application, serve APIs, generate Presigned URLs, and execute background jobs.
-- **Amazon RDS PostgreSQL:** Store metadata, business data, and support full-text search.
-- **Amazon S3 and S3 Glacier:** Store original document files and archive less frequently used files to cold storage.
-- **Amazon SQS:** Decouple file upload from document text extraction processing.
-- **Amazon CloudWatch and Amazon SNS:** Monitor infrastructure health and deliver notifications when resource usage exceeds thresholds.
+- A React frontend for search, upload, preview, and administration workflows.
+- A Node.js/Express backend for business logic, access control, and presigned URL generation.
+- PostgreSQL for structured metadata, approval states, uploader information, and document statistics.
+- Amazon S3 for original file storage and direct upload support through presigned URLs.
+- Extension-ready services such as CloudFront, SQS, CloudWatch, SNS, and Glacier for performance, asynchronous processing, observability, and storage optimization.
 
-### Component Design
-- **Frontend:** Built with React and Tailwind CSS, providing Upload, Search, Filter, and Document Preview interfaces.
-- **Application Layer:** EC2 app servers receive requests from the ALB, handle user logic, and issue Presigned URLs.
-- **Background Processing:** EC2 workers receive messages from SQS and process text extraction jobs.
-- **Storage Layer:** Original files are stored in S3, metadata is stored in RDS PostgreSQL, and old files are moved to Glacier.
-- **Monitoring Layer:** CloudWatch collects metrics and SNS sends warning emails when incidents occur.
+The most important design choice is to let the frontend upload files directly to S3 through presigned URLs while the backend focuses on metadata and business logic. This is a practical architecture for a document-centric platform expected to grow over time.
 
-### 4. Technical Implementation
-**Implementation phases**
+### 4. Solution architecture
+The architecture below illustrates the AWS-oriented direction for CloudDoc across the content-delivery layer, application layer, data layer, and operational support layer:
 
-1. **Design and planning:** Finalize the AWS architecture diagram, complete UI/UX design, and standardize the PostgreSQL schema.
-2. **Network and resource provisioning:** Configure the VPC, public and private subnets, security groups, ALB, EC2, RDS, and SQS.
-3. **Development and integration:** Build the React frontend, Node.js backend APIs, the Presigned URL upload flow, background worker processing, and PostgreSQL full-text search.
-4. **Monitoring and optimization:** Configure CloudWatch alarms, SNS notifications, load testing, S3 lifecycle policies, and overall system tuning.
+![CloudDoc AWS Architecture](/fcaj/images/2-Proposal/aws-drawio-cloudoc.png)
 
-**Technical requirements**
+**Main component explanation**
 
-- **Frontend:** React Context API, asynchronous API handling with Fetch or Axios, form validation, and embedded document preview.
-- **Backend/Cloud:** Node.js, AWS SDK, S3 Presigned URL handling, SQS, RDS PostgreSQL, full-text search, IAM, security groups, and core AWS networking knowledge.
+- **Amazon CloudFront and Amazon S3 (Static):** deliver the static frontend efficiently to users while reducing latency and keeping the application layer focused on dynamic requests.
+- **Internet Gateway and Application Load Balancer:** receive incoming traffic and route requests into the backend layer.
+- **Amazon EC2:** runs the Express backend, generates presigned URLs, accepts metadata submissions, and handles the core business logic.
+- **Amazon RDS PostgreSQL:** stores document metadata, account data, moderation status, and structured information required for search and management flows.
+- **Amazon S3 (Upload):** stores uploaded documents and supports direct file transfer from the frontend.
+- **Amazon SQS:** provides a future-ready path for asynchronous jobs such as document processing, scanning, extraction, or indexing.
+- **Amazon CloudWatch and Amazon SNS:** support logging, monitoring, alerting, and operational visibility.
+- **Amazon S3 Glacier:** provides long-term storage-cost optimization for infrequently accessed materials.
 
-### 5. Timeline and Milestones
-- **Month 1:** Gather requirements, design the system architecture, and prepare the initial UI/UX mockups in Figma.
-- **Month 2:** Provision VPC, ALB, EC2, RDS PostgreSQL, and S3, then implement the direct upload flow.
-- **Month 3:** Integrate SQS workers, full-text search, CloudWatch, SNS, end-to-end testing, and demo video preparation.
+**Why this architecture matters**
 
-### 6. Budget Estimation
-- **Amazon EC2 (2 small Multi-AZ instances):** Optimized for educational use and potentially partially covered by Free Tier in the early stage.
-- **Amazon RDS PostgreSQL:** Can be provisioned with a small instance size to keep demo-stage costs low.
-- **Application Load Balancer:** Expected to be one of the main ongoing infrastructure costs due to the high-availability design.
-- **Amazon S3 and S3 Glacier:** Low cost and well optimized through lifecycle policies.
-- **Amazon SQS, CloudWatch, and SNS:** Minimal cost at the current expected usage scale.
+This architecture shows that CloudDoc is not only a UI exercise. It is framed as a complete system with content delivery, application processing, structured metadata, object storage, and operational readiness. That perspective is important because it creates a realistic roadmap from internship demo to a more production-like platform.
 
-**Estimated monthly cost:** around 20 to 25 USD per month, mainly driven by ALB and RDS.
+### 5. Actual internship implementation scope
+The practical internship scope stayed aligned with what the team could realistically complete in the current codebase:
 
-### 7. Risk Assessment
-| Risk | Impact | Probability | Mitigation Strategy |
-| --- | --- | --- | --- |
-| Local infrastructure failure | Very high | Low | Use Multi-AZ deployment for redundancy |
-| EC2 overload during traffic spikes | High | Medium | Use ALB together with CloudWatch monitoring |
-| Bandwidth bottleneck from large file uploads | Medium | High | Use Presigned URLs and enforce upload size limits |
-| Background processing data loss | High | Low | Decouple processing with Amazon SQS |
+- Building the React frontend for Home, Search, Upload, Preview, User Profile, and Admin Dashboard pages.
+- Designing simulated login and role-based access for students and administrators.
+- Standardizing document metadata for search, moderation, and management flows.
+- Preparing the document upload flow around the presigned URL model.
+- Supporting integration with the Express backend, PostgreSQL, and S3 for the demo stage.
 
-### 8. Expected Outcomes
-**Technical outcome:** Successfully build a CloudDoc platform on a modern AWS architecture with high availability, strong security, and effective document content search.
+This also means that not every AWS component in the architecture was fully implemented during the internship. Services such as SQS, CloudWatch, SNS, and Glacier currently represent a justified future direction rather than a fully completed delivery. Making that distinction explicit keeps the proposal honest and technically credible.
 
-**Long-term value:** The system gives HUTECH students a centralized and efficient way to retrieve study materials, while also demonstrating the development team’s ability to design and implement professional cloud architecture.
+### 6. Proposed roadmap
+**Phase 1: Core product stabilization**
+
+- Finalize search, upload, preview, and navigation experience.
+- Improve moderation flow and metadata consistency.
+- Complete the admin-facing management experience.
+
+**Phase 2: Real cloud integration**
+
+- Strengthen frontend integration with Express and PostgreSQL.
+- Complete the direct-to-S3 upload workflow through presigned URLs.
+- Improve environment setup and end-to-end testing reliability.
+
+**Phase 3: System expansion**
+
+- Add background processing for heavier or asynchronous tasks.
+- Improve monitoring, alerting, and logging for deployment readiness.
+- Apply storage lifecycle optimization for older, less frequently accessed documents.
+
+### 7. Budget estimate and operating cost
+The image below summarizes the estimated monthly cost of the CloudDoc architecture in a near-production setup. The estimate is based on an AWS Pricing Calculator snapshot exported on **June 17, 2026**:
+
+![CloudDoc AWS Monthly Cost](/fcaj/images/2-Proposal/aws-monthly-cost-cloudoc.jpg)
+
+| Item | Estimated monthly cost (USD) | Notes |
+| --- | ---: | --- |
+| RDS PostgreSQL Multi-AZ | 85.50 | The largest cost component because availability is prioritized |
+| EC2 Server (t4g.micro x2) | 19.51 | Two application instances across two AZs |
+| Application Load Balancer | 18.98 | Shared entry point and traffic distribution |
+| NAT Instance (t4g.nano) | 4.64 | Outbound support for private subnet resources |
+| CloudWatch | 4.01 | Basic metrics, logs, and alarms |
+| Other (SNS, CloudFront) | 0.89 | Small supporting service cost |
+| **Total** | **133.53** | Reference estimate for the target architecture |
+
+This cost profile is more suitable for a production-oriented architecture or a full demo environment than for a minimal student lab. For internship or dev/test environments, the team can reduce cost by:
+
+- Using a smaller single-AZ setup before higher availability is needed.
+- Stopping or downsizing EC2 instances outside active development windows.
+- Applying S3 lifecycle policies to move cold files to Glacier.
+- Enabling detailed CloudWatch logging only where it creates real value.
+- Using IAM Roles and an S3 Gateway Endpoint instead of hard-coded access keys.
+
+### 8. Risks and mitigation plan
+| Risk | Impact | Mitigation |
+| --- | --- | --- |
+| Misalignment between frontend, backend, and the presigned URL upload flow | Upload failures and inconsistent data flow | Standardize API contracts and validate the upload path end-to-end before demo |
+| Inconsistent metadata or weak moderation | Poor search experience and noisy content quality | Define mandatory metadata fields and add an approval workflow for administrators |
+| Weak AWS permission design | Data exposure or over-privileged access | Apply IAM Roles, the Principle of Least Privilege, and avoid hard-coded keys in source code |
+| High cost if the full architecture is kept for dev usage | Budget waste before real usage exists | Separate dev/demo environments and review cost regularly |
+| Limited operational visibility during incidents | Slow diagnosis and unstable troubleshooting | Add metrics, logs, CloudWatch alarms, and SNS notifications for critical components |
+| Internship scope is smaller than the full target architecture | Readers may assume the team over-claimed implementation | Clearly mark what was completed and what remains a future-ready design direction |
+
+### 9. Expected value
+CloudDoc provides value at three levels:
+
+- **For end users:** students get a centralized and more trustworthy place to find and contribute learning resources.
+- **For the development team:** the project combines frontend, backend, metadata modeling, and AWS system thinking in a single product.
+- **For learning outcomes:** the platform connects UI/UX work, practical product thinking, and cloud architecture design in a very applied way.
+
+From my personal perspective, the proposal also reflects an important shift in mindset: moving from building a nice interface to designing an experience that must work together with data flow, security, cost, and system operations. That was one of the most meaningful learning outcomes of this internship.

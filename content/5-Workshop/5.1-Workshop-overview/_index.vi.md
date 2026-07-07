@@ -1,19 +1,26 @@
 ---
-title : "Giới thiệu"
-date : 2024-01-01 
-weight : 1
-chapter : false
-pre : " <b> 5.1. </b> "
+title: "Tổng quan workshop"
+date: 2024-01-01
+weight: 1
+chapter: false
+pre: " <b> 5.1. </b> "
 ---
+### Mục tiêu
 
-#### Giới thiệu về VPC Endpoint
+Workshop này mô tả luồng xử lý tài liệu của CloudDoc dưới góc nhìn kỹ thuật và triển khai thực tế. Mục tiêu không chỉ là tải file lên cloud, mà còn phải đảm bảo trải nghiệm người dùng mượt, dễ mở rộng và phù hợp với mô hình phân quyền trong môi trường học tập.
 
-+ Điểm cuối VPC (endpoint) là thiết bị ảo. Chúng là các thành phần VPC có thể mở rộng theo chiều ngang, dự phòng và có tính sẵn sàng cao. Chúng cho phép giao tiếp giữa tài nguyên điện toán của bạn và dịch vụ AWS mà không gây ra rủi ro về tính sẵn sàng.
-+ Tài nguyên điện toán đang chạy trong VPC có thể truy cập Amazon S3 bằng cách sử dụng điểm cuối Gateway. Interface Endpoint  PrivateLink có thể được sử dụng bởi tài nguyên chạy trong VPC hoặc tại TTDL.
+### Bài toán
 
-#### Tổng quan về workshop
-Trong workshop này, bạn sẽ sử dụng hai VPC.
-+ **"VPC Cloud"** dành cho các tài nguyên cloud như Gateway endpoint và EC2 instance để kiểm tra.
-+ **"VPC On-Prem"** mô phỏng môi trường truyền thống như nhà máy hoặc trung tâm dữ liệu của công ty. Một EC2 Instance chạy phần mềm StrongSwan VPN đã được triển khai trong "VPC On-prem" và được cấu hình tự động để thiết lập đường hầm VPN Site-to-Site với AWS Transit Gateway. VPN này mô phỏng kết nối từ một vị trí tại TTDL (on-prem) với AWS cloud. Để giảm thiểu chi phí, chỉ một phiên bản VPN được cung cấp để hỗ trợ workshop này. Khi lập kế hoạch kết nối VPN cho production workloads của bạn, AWS khuyên bạn nên sử dụng nhiều thiết bị VPN để có tính sẵn sàng cao.
+CloudDoc cần giải quyết đồng thời ba yêu cầu:
 
-![overview](/images/5-Workshop/5.1-Workshop-overview/diagram1.png)
+- Người dùng phải tải tài liệu lên một cách đơn giản.
+- Hệ thống không bị nghẽn vì file lớn đi qua backend.
+- Metadata vẫn được kiểm soát tốt để hỗ trợ tìm kiếm, preview và kiểm duyệt.
+
+### Tại sao luồng upload lại quan trọng
+
+Trong nhiều hệ thống nhỏ, việc upload thường được làm khá đơn giản: người dùng gửi file về backend, backend nhận file rồi lưu lại. Cách này dễ làm ở giai đoạn đầu nhưng sẽ nhanh chóng bộc lộ nhược điểm khi dung lượng file lớn hơn hoặc số lượng người dùng tăng lên. Với CloudDoc, việc chọn đúng luồng upload là quyết định ảnh hưởng trực tiếp tới trải nghiệm người dùng, hiệu năng backend và hướng phát triển về sau.
+
+### Cách tiếp cận
+
+Giải pháp phù hợp là để backend tạo **presigned URL**, sau đó frontend tải file trực tiếp lên **Amazon S3**. Sau khi upload thành công, frontend gửi metadata về backend để lưu vào **PostgreSQL**. Cách làm này giảm tải cho server ứng dụng và tách rõ phần file với phần dữ liệu nghiệp vụ.

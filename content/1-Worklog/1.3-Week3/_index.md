@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Network infrastructure deployment (VPC) and cloud security administration"
 date: 2024-01-01
 weight: 1

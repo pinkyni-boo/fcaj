@@ -1,123 +1,73 @@
-﻿---
+---
 title: "Blog 1"
 date: 2024-01-01
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+# Xây dựng ứng dụng Offline-First với AWS Amplify, TanStack Query, AppSync và MongoDB Atlas
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+![Minh họa Blog 1](/fcaj/images/3-BlogsTranslated/blog1-doc-image.png)
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+Blog đầu tiên tôi chọn dịch xoay quanh bài toán rất thực tế: làm sao để ứng dụng web hoặc mobile vẫn mang lại trải nghiệm mượt mà khi kết nối mạng chập chờn hoặc tạm thời bị mất. Thay vì chờ server phản hồi rồi mới cập nhật giao diện, kiến trúc offline-first kết hợp với optimistic UI cho phép người dùng thấy kết quả gần như ngay lập tức, sau đó hệ thống mới đồng bộ dữ liệu ở phía sau.
 
----
+Bài viết từ AWS giới thiệu cách kết hợp **AWS Amplify Gen 2**, **AWS AppSync**, **TanStack Query** và **MongoDB Atlas** để xây dựng mô hình này. Đây là một hướng tiếp cận đáng chú ý vì nó giải quyết đồng thời cả hai mục tiêu: nâng cao trải nghiệm người dùng và giữ được khả năng đồng bộ dữ liệu khi mạng được khôi phục.
 
-## Hướng dẫn kiến trúc
+### 1. Tổng quan giải pháp
 
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
+Kiến trúc được mô tả trong bài sử dụng:
 
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
+- **AWS Amplify Gen 2** để xây dựng và triển khai ứng dụng full-stack nhanh hơn.
+- **AWS AppSync** để cung cấp GraphQL API phục vụ đồng bộ dữ liệu.
+- **TanStack Query** để quản lý cache phía client, optimistic updates và rollback khi cần.
+- **MongoDB Atlas** làm cơ sở dữ liệu backend.
+- Bên cạnh đó còn có **AWS Lambda** cho xử lý serverless và **Amazon Cognito** cho xác thực người dùng.
 
-**Kiến trúc giải pháp bây giờ như sau:**
+Điểm đáng chú ý là phần client không còn đóng vai trò chỉ hiển thị dữ liệu thụ động, mà chủ động quản lý trạng thái và đưa ra phản hồi sớm hơn cho người dùng.
 
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
+### 2. Optimistic UI hoạt động như thế nào?
 
----
+Thay vì chờ phản hồi từ server rồi mới cập nhật giao diện, optimistic UI cho phép ứng dụng hiển thị kết quả dự kiến ngay sau khi người dùng thao tác. Ví dụ trong ứng dụng to-do:
 
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
+- Người dùng tạo một công việc mới.
+- Giao diện hiển thị công việc đó ngay lập tức trong danh sách.
+- Request được gửi đến AppSync để lưu dữ liệu thật.
+- Nếu request thành công, dữ liệu được đồng bộ như bình thường.
+- Nếu request thất bại hoặc mất kết nối, trạng thái cũ được khôi phục thông qua cơ chế rollback.
 
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+Cách tiếp cận này giúp giảm cảm giác chờ đợi và làm cho ứng dụng phản hồi tự nhiên hơn, đặc biệt trong bối cảnh mạng yếu hoặc không ổn định.
 
----
+### 3. Luồng xử lý chính
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+Từ nội dung bài viết, tôi tóm tắt luồng hoạt động như sau:
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+1. Người dùng thực hiện thao tác tạo hoặc cập nhật dữ liệu.
+2. TanStack Query cập nhật cache cục bộ và phản ánh thay đổi ngay trên giao diện.
+3. Request GraphQL được gửi tới AWS AppSync.
+4. AppSync xử lý và lưu dữ liệu xuống MongoDB Atlas.
+5. Nếu xảy ra lỗi, cache được phục hồi về trạng thái trước đó.
 
----
+Trong ví dụ của AWS, cơ chế xử lý xung đột được triển khai theo hướng **First-Come, First-Served**, giúp đơn giản hóa việc giải quyết các cập nhật cạnh tranh.
 
-## The pub/sub hub
+### 4. Điều tôi học được từ bài blog
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
+Bài viết này làm tôi chú ý hơn tới việc trải nghiệm người dùng không chỉ đến từ giao diện đẹp, mà còn đến từ cách dữ liệu được phản hồi. Với vai trò làm frontend cho CloudDoc, tôi thấy tư duy offline-first và optimistic UI rất hữu ích trong các màn hình như:
 
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+- Upload tài liệu.
+- Chỉnh sửa metadata.
+- Lưu trạng thái kiểm duyệt.
+- Cập nhật thông tin hồ sơ người dùng.
 
----
+Ngay cả khi CloudDoc chưa triển khai offline-first đầy đủ, việc hiểu mô hình này giúp tôi thiết kế luồng giao diện hợp lý hơn, nhất là ở những thao tác cần phản hồi nhanh.
 
-## Core microservice
+### 5. Liên hệ với CloudDoc
 
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
+- CloudDoc có thể học từ mô hình optimistic UI để cải thiện cảm giác phản hồi ở các form upload hoặc cập nhật dữ liệu.
+- Nếu sau này hệ thống có thêm tính năng làm việc tạm khi mạng yếu, tư duy offline-first sẽ rất đáng tham khảo.
+- Việc dùng AppSync và lớp đồng bộ dữ liệu cũng gợi ra cách tổ chức client state rõ ràng hơn cho các ứng dụng có nhiều trạng thái động.
 
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
+### 6. Kết luận
 
----
+Offline-first và optimistic UI đang trở thành những kỹ thuật quan trọng để cải thiện trải nghiệm người dùng trong các ứng dụng hiện đại. Với Amplify, AppSync và TanStack Query, việc triển khai các tính năng này trở nên dễ tiếp cận hơn mà vẫn giữ được khả năng đồng bộ dữ liệu khi mạng được khôi phục.
 
-## Front door microservice
-
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
-
----
-
-## Staging ER7 microservice
-
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
-
----
-
-## Tính năng mới trong giải pháp
-
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
-
+**Link bài đăng trong nhóm FCAJ:** https://www.facebook.com/groups/awsstudygroupfcj/permalink/2190116435086650/

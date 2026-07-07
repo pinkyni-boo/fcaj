@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Thiết lập môi trường thực hành và Kiến trúc AWS cơ bản"
 date: 2024-01-01
 weight: 1
@@ -7,26 +7,23 @@ pre: " <b> 1.1. </b> "
 ---
 ### Mục tiêu tuần 1:
 
-* Kết nối, làm quen với môi trường làm việc mới và các thành viên trong chương trình First Cloud AI Journey (FCAJ).
-* Nắm vững các khái niệm cơ sở về điện toán đám mây và làm quen với giao diện AWS Management Console cùng công cụ dòng lệnh CLI.
+- Tìm hiểu tổng quan chương trình First Cloud AI Journey, nội quy văn phòng AWS và cách tham gia xuyên suốt kỳ thực tập.
+- Khởi tạo và thiết lập tài khoản AWS để chuẩn bị cho các buổi học và bài thực hành.
+- Làm quen với lộ trình học tập, các module kiến thức nền tảng và nguồn tài liệu chính của chương trình.
+- Thực hành các bài lab đầu tiên để làm quen với môi trường AWS.
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
+### Các công việc triển khai trong tuần:
+| Ngày | Công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | --- | --- | --- | --- | --- |
-| 2 | - Tham gia buổi định hướng chương trình FCAJ.<br><br>- Nghiên cứu và ghi nhận các quy định, nội quy làm việc tại văn phòng AWS. | 17/04/2026 | 17/04/2026 |  |
-| 3 | - Tìm hiểu tổng quan về hệ sinh thái AWS.<br><br>- Khám phá chức năng của các nhóm dịch vụ cốt lõi: Compute, Storage, Networking và Database. | 18/04/2026 | 18/04/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 4 | - Thiết lập tài khoản AWS Free Tier để phục vụ thực hành.<br><br>- Bắt đầu làm quen với cách điều hướng trên AWS Console.<br><br>- Xem các video lý thuyết nền tảng (Module 01). | 19/04/2026 | 19/04/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 5 | - Đi sâu vào dịch vụ Amazon EC2: Các loại cấu hình (Instance types), AMI, và lưu trữ EBS.<br><br>- Cài đặt và cấu hình AWS CLI trên thiết bị cá nhân. | 20/04/2026 | 20/04/2026 |  |
-| 6 | - **Thực hành Lab 1 & 2:** Trực tiếp khởi tạo máy chủ ảo EC2, thiết lập kết nối từ xa (SSH) vào hệ thống và thực hành gắn EBS volume. | 21/04/2026 | 21/04/2026 |  |
+| 1 | **Tìm hiểu chương trình FCAJ và nội quy văn phòng AWS**<br><br>- Đọc thông tin tổng quan về chương trình First Cloud AI Journey, cách tổ chức học tập và định hướng thực tập.<br><br>- Tìm hiểu nội quy khi tham gia học tập, làm việc tại văn phòng AWS và các quy định cần tuân thủ trong suốt chương trình. | 17/04/2026 | 17/04/2026 |  |
+| 2 | **Khởi tạo và thiết lập tài khoản AWS**<br><br>- Tạo tài khoản AWS phục vụ cho việc học và thực hành.<br><br>- Làm quen với giao diện AWS Management Console và cách truy cập các dịch vụ cơ bản. | 18/04/2026 | 18/04/2026 |  |
+| 3 | **Làm quen lộ trình học tập và kiến thức nền tảng**<br><br>- Xem sơ bộ roadmap học tập của chương trình để nắm tiến độ các chủ đề chính.<br><br>- Nghiên cứu và xem các link YouTube kiến thức nền tảng để chuẩn bị cho giai đoạn thực hành. | 19/04/2026 | 19/04/2026 |  |
+| 4 | **Thực hành Lab 1 và Lab 2**<br><br>- Thực hiện các bài lab đầu tiên theo hướng dẫn của chương trình.<br><br>- Làm quen với thao tác cơ bản trên AWS và cách áp dụng kiến thức lý thuyết vào môi trường thực hành. | 20/04/2026 | 20/04/2026 |  |
 
+### Kết quả đạt được trong tuần 1:
 
-### Kết quả đạt được tuần 1:
-
-* Hiểu rõ kiến trúc tổng thể của AWS và phân biệt được chức năng của các nhóm dịch vụ nền tảng bao gồm Compute, Storage, Networking và Database.
-* Thiết lập thành công và an toàn môi trường thực hành với tài khoản AWS Free Tier.
-* Sử dụng thành thạo giao diện AWS Management Console để tra cứu, cấu hình và thao tác với các dịch vụ trực tuyến.
-* Hoàn tất việc cài đặt AWS CLI trên máy cá nhân, thiết lập thành công các thông tin xác thực như Access Key, Secret Key và cấu hình Region mặc định.
-* Nắm được cách triển khai, quản trị máy chủ ảo EC2 và có khả năng kết nối linh hoạt giữa giao diện Web với CLI để quản lý tài nguyên đồng thời.
-
-
-
+- Nắm được cấu trúc tổng quan của chương trình FCAJ, cách học tập và các yêu cầu cơ bản trong kỳ thực tập.
+- Hiểu các nội quy chính tại văn phòng AWS và có sự chuẩn bị nghiêm túc hơn cho môi trường làm việc thực tế.
+- Khởi tạo thành công tài khoản AWS và bước đầu làm quen với giao diện quản trị dịch vụ.
+- Hình dung rõ hơn lộ trình học tập, các chủ đề nền tảng và cách tự học thông qua video, tài liệu của chương trình.
+- Hoàn thành Lab 1 và Lab 2, từ đó bắt đầu làm quen với việc học AWS theo hướng vừa học lý thuyết vừa thực hành.

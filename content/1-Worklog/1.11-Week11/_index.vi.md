@@ -1,55 +1,27 @@
-﻿---
-title: "Worklog Tuần 11"
+---
+title: "Tối ưu trải nghiệm, preview/download và giao diện quản trị"
 date: 2024-01-01
-weight: 2
+weight: 1
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
 ### Mục tiêu tuần 11:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+- Nâng chất lượng trải nghiệm người dùng trên các màn hình preview, download và quản trị.
+- Hoàn thiện dashboard quản trị để kiểm tra nhanh tình trạng tài liệu, dung lượng lưu trữ và hành động duyệt.
+- Chuẩn bị frontend ở trạng thái đủ ổn định để gắn với backend thật trong tuần cuối.
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+### Các công việc triển khai trong tuần:
+| Ngày | Công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
+| --- | --- | --- | --- | --- |
+| 1 | Tối ưu trang preview tài liệu, bổ sung hiển thị metadata, tài liệu liên quan và nút tải xuống trực quan. | 29/06/2026 | 29/06/2026 |  |
+| 2 | Rà soát hành vi tải tài liệu và tăng bộ đếm download ở phía giao diện để phản ánh gần đúng nghiệp vụ. | 30/06/2026 | 30/06/2026 |  |
+| 3 | Hoàn thiện bố cục dashboard quản trị gồm tổng quan, danh sách tài liệu và khu vực theo dõi lưu trữ. | 01/07/2026 | 01/07/2026 |  |
+| 4 | Tinh chỉnh giao diện mobile, màu sắc, khoảng cách và một số animation nhỏ để giao diện đồng nhất hơn. | 02/07/2026 | 02/07/2026 |  |
+| 5 | Demo nội bộ với nhóm, ghi nhận các lỗi UI/UX và chỉnh sửa những điểm ảnh hưởng lớn đến trải nghiệm. | 03/07/2026 | 03/07/2026 |  |
 
+### Kết quả đạt được trong tuần 11:
 
-### Kết quả đạt được tuần 11:
-
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
-
+- Các trang preview và download trở nên trực quan hơn, giúp trải nghiệm đọc tài liệu gần với sản phẩm thực tế.
+- Dashboard quản trị đã đủ rõ để thể hiện khả năng kiểm duyệt và theo dõi tài liệu trong hệ thống.
+- Frontend được polish tốt hơn về responsive, bố cục và độ mượt trước khi nối với backend thật.

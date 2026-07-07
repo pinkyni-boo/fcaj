@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Events Participated"
 date: 2024-01-01
 weight: 4
@@ -6,36 +6,32 @@ chapter: false
 pre: " <b> 4. </b> "
 ---
 
-> In this section, you should list and describe in detail the events you have participated in during your internship or work experience.  
-> 
-> Each event should be presented in the format Event 1, Event 2, Event 3…, along with the following details:
-> * Event name
-> * Date and time
-> * Location (if applicable)
-> * Your role in the event (attendee, event support, speaker, etc.)
-> * A brief description of the event’s content and main activities
-> * Outcomes or value gained (lessons learned, new skills, contribution to the team/project)
-> * This listing helps demonstrate your actual participation as well as the soft skills and experience you have gained from each event.
+Alongside working on CloudDoc, I also participated in technology workshops and events within the FCAJ program. These sessions were valuable because they expanded my view beyond the direct project workflow and introduced broader topics such as GenAI, application modernization, database thinking, security, cost optimization, and AWS-based operations.
 
-During my internship, I participated in two events. Each one was a memorable experience that provided new, interesting, and useful knowledge, along with gifts and wonderful moments.
+These events helped me see software work from a wider perspective. While project work often focused on interface design, document flow, and backend integration, the workshops exposed me to how enterprises apply AI, how systems are modernized, and how cloud platforms support performance, monitoring, security, and operating-cost decisions.
 
-### [Event 1](4.1-Event1/)  
-&emsp;**Event Name:** Workshop: Enterprise AI Assistants and AWS Infrastructure Audit Automation with GenAI  
+### Why this section matters
 
-&emsp;**Date & Time:** 09:00, May 23, 2026  
+- It reflects learning beyond the fixed internship task list.
+- It connects project work with real-world enterprise technology use cases.
+- It broadens my understanding of GenAI, modernization, observability, and AWS system design.
+- It strengthens the habit of technical reflection after each learning event.
 
-&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Ben Nghe Ward, District 1, Ho Chi Minh City  
+### How I approached each event
 
-&emsp;**Role:** Attendee  
+After each workshop, I usually summarized:
 
----
+1. The main technical theme of the session.
+2. The ideas that could connect to CloudDoc directly or indirectly.
+3. The topics worth researching further afterward.
 
-### [Event 2](4.2-Event2/)  
-&emsp;**Event Name:** Workshop: Application and Database Modernization with the GenAI Platform  
+That approach turned this section into an actual learning record instead of just a participation list.
 
-&emsp;**Date & Time:** 09:00, May 30, 2026  
+### Main events participated in
 
-&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Ben Nghe Ward, District 1, Ho Chi Minh City  
+- [4.1 - Event 1: AWS Vietnam Community Day in May - AI, CloudFront, and Multi-Agent Systems](4.1-event1/)
+- [4.2 - Workshop: Application and Database Modernization with the GenAI Platform](4.2-event2/)
 
-&emsp;**Role:** Attendee  
+### Key value gained
 
+These events helped me realize that building software is not only about implementing isolated features. A strong product also depends on how data is managed, how infrastructure is monitored, how cost is controlled, and how new technologies such as AI are introduced in a practical and responsible way.

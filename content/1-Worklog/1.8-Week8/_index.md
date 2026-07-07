@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Frontend project setup and CloudDoc system architecture design"
 date: 2024-01-01
 weight: 1
@@ -12,7 +12,7 @@ pre: " <b> 1.8. </b> "
 * Combine self-driven development with in-office learning sessions to align implementation direction and refine the UI based on mentor feedback.
 
 ### Tasks to be carried out this week:
-| Day | Task | Start Date | Completion Date | Reference Material / Tools |
+| Day | Task | Start Date | Completion Date | Reference Material |
 | --- | --- | --- | --- | --- |
 | 2 | Finalize the cloud architecture diagram (AWS Architecture):<br>- Design the detailed connection flow across VPC, ALB, EC2, RDS PostgreSQL, S3, SQS, and CloudWatch.<br>- Review the data flow to ensure high availability and private subnet security. | 08/06/2026 | 08/06/2026 |  |
 | 3 | Participate in in-office learning while initializing the Frontend project and global state:<br>- Discuss UI direction, user flow, and source code organization with the mentor and team members.<br>- Initialize the ReactJS codebase and integrate Tailwind CSS.<br>- Set up the React Context API (AppContext) for global state management such as authentication and notifications. | 09/06/2026 | 09/06/2026 |  |
