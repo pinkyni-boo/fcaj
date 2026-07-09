@@ -28,7 +28,8 @@ Workshop tập trung vào một hành trình hoàn chỉnh của tài liệu:
 
 #### Các nội dung tiếp theo
 
-Hai mục con bên dưới đóng vai trò nền tảng cho toàn bộ workshop:
+Ba mục con bên dưới đóng vai trò nền tảng cho toàn bộ workshop:
 
 1. [CloudDoc là gì?](5.1.1-what-is-clouddoc/)
 2. [Dịch vụ sử dụng](5.1.2-services-used/)
+3. [Kiến trúc giải pháp](5.1.3-architecture/)

@@ -28,3 +28,4 @@ In practice, a learning document platform needs more than a successful file uplo
 
 1. [What is CloudDoc?](5.1.1-what-is-clouddoc/)
 2. [Services](5.1.2-services-used/)
+3. [Architecture](5.1.3-architecture/)
