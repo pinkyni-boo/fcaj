@@ -5,9 +5,8 @@ weight: 2
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
-# Nhúng trợ lý GenAI vào ứng dụng nội bộ với AWS Amplify, AWS CDK và Amazon Q Business
 
-![Minh họa Blog 2](/fcaj/images/3-BlogsTranslated/blog2-doc-image.png)
+<img src="/fcaj/images/3-BlogsTranslated/blog2-doc-image.png" alt="Minh họa Blog 2" style="max-width: 90%; height: auto;">
 
 Blog thứ hai tôi chọn dịch nói về một nhu cầu đang ngày càng phổ biến trong doanh nghiệp: làm sao để người dùng có thể hỏi đáp bằng ngôn ngữ tự nhiên trên chính kho tài liệu nội bộ của tổ chức, thay vì phải tự đi tìm từng file hoặc từng thư mục. AWS giới thiệu một cách tiếp cận sử dụng **Amazon Q Business**, **AWS Amplify Gen 2** và **AWS CDK** để xây dựng mô hình này khá nhanh mà vẫn có kiểm soát quyền truy cập.
 

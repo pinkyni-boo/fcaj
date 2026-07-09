@@ -5,7 +5,8 @@ weight: 1
 chapter: false
 ---
 
-# Internship Report
+<h1 style="text-align: center; color: #5e728b;">INTERNSHIP REPORT</h1>
+
 ### Student Information:
 <div class="student-profile">
   <div class="student-profile__info">
@@ -20,7 +21,7 @@ chapter: false
     <p><strong>Internship Duration:</strong> 17/04/2026 - 10/07/2026</p>
   </div>
   <div class="student-profile__avatar">
-    <img src="/fcaj/images/2-Proposal/aws-drawio-cloudoc.png" alt="CloudDoc solution architecture on AWS" style="width: 100%; max-width: 560px; height: auto; border-radius: 18px; box-shadow: 0 10px 30px rgba(15, 40, 75, 0.12); object-fit: contain;">
+    <img src="/fcaj/images/avatar-thao.jpg" alt="Profile picture of Vu Thi Ngoc Thao" style="width: 100%; max-width: 320px; height: auto; border-radius: 18px; box-shadow: 0 10px 30px rgba(15, 40, 75, 0.12); object-fit: cover;">
   </div>
 </div>
 

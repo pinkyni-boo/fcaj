@@ -5,7 +5,6 @@ weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-# Bản đề xuất: CloudDoc Platform for HUTECH Students
 ## Hệ thống quản lý và tra cứu tài liệu học tập thông minh theo định hướng triển khai trên AWS
 
 ### 1. Tóm tắt điều hành
@@ -15,7 +14,7 @@ Trong phạm vi thực tập, tôi tham gia chính ở mảng frontend, đồng 
 
 Điểm quan trọng của CloudDoc là hệ thống không được thiết kế như một website upload file đơn giản. Thay vào đó, kiến trúc được tách lớp rõ ràng giữa giao diện, logic nghiệp vụ, metadata tài liệu và object storage. Cách tiếp cận này giúp hệ thống dễ mở rộng hơn về hiệu năng, bảo mật và vận hành.
 
-### 2. Bối cảnh và nhu cầu thực tế
+### 2. Tuyên bố vấn đề
 Trong môi trường học tập hiện nay, tài liệu thường bị phân tán trên Google Drive cá nhân, nhóm chat, link tạm thời hoặc thư mục nội bộ thiếu tổ chức. Điều này dẫn đến nhiều vấn đề:
 
 - Sinh viên tốn thời gian tìm lại tài liệu đúng môn học hoặc đúng phiên bản.
@@ -23,9 +22,6 @@ Trong môi trường học tập hiện nay, tài liệu thường bị phân t�
 - Tài liệu dễ bị trùng lặp, thất lạc hoặc mất giá trị khi link cũ hết hiệu lực.
 - Người dùng mới khó xác định tài liệu nào đáng tin cậy và còn phù hợp.
 
-Đối với HUTECH, một nền tảng học liệu tập trung sẽ giúp giảm ma sát trong quá trình tự học, tăng khả năng chia sẻ tài nguyên có tổ chức và hình thành kho tài liệu dùng chung theo trường, ngành và môn học. CloudDoc được đề xuất để giải quyết chính nhu cầu đó.
-
-### 3. Tuyên bố vấn đề
 **Vấn đề hiện tại**
 
 Nếu xây dựng hệ thống theo mô hình đơn giản, nghĩa là toàn bộ upload và download đều đi qua application server, backend sẽ nhanh chóng trở thành nút nghẽn khi số lượng tài liệu và lưu lượng tăng. Ngoài ra, khi file và metadata không tách riêng, hệ thống khó mở rộng phần tìm kiếm, kiểm duyệt, preview và phân quyền.
@@ -44,10 +40,10 @@ CloudDoc được đề xuất theo cấu trúc sau:
 
 Mấu chốt của giải pháp là cho frontend upload trực tiếp lên S3 bằng presigned URL, trong khi backend tập trung vào metadata và nghiệp vụ. Kiến trúc này phù hợp hơn cho một nền tảng tài liệu số có xu hướng tăng trưởng cả về dung lượng lẫn số lượng người dùng.
 
-### 4. Kiến trúc giải pháp
+### 3. Kiến trúc giải pháp
 Kiến trúc dưới đây mô tả định hướng triển khai CloudDoc trên AWS với lớp phân phối nội dung, lớp ứng dụng, lớp dữ liệu và lớp giám sát vận hành:
 
-![CloudDoc AWS Architecture](/fcaj/images/2-Proposal/aws-drawio-cloudoc.png)
+<img src="/fcaj/images/2-Proposal/aws-drawio-cloudoc.png" alt="CloudDoc AWS Architecture" style="max-width: 90%; height: auto;">
 
 **Mô tả các thành phần chính**
 
@@ -64,7 +60,7 @@ Kiến trúc dưới đây mô tả định hướng triển khai CloudDoc trên
 
 Kiến trúc này cho thấy CloudDoc không chỉ là bài tập giao diện, mà là một hệ thống có lớp phân phối nội dung, lớp xử lý ứng dụng, lớp dữ liệu giao dịch, lớp lưu trữ object và lớp giám sát. Đây là nền tảng cần thiết nếu dự án muốn phát triển tiếp sau kỳ thực tập.
 
-### 5. Phạm vi triển khai thực tế trong kỳ thực tập
+### 4. Triển khai kỹ thuật
 Trong kỳ thực tập, nhóm tập trung vào những phần khả thi và bám sát codebase hiện có:
 
 - Xây dựng frontend React cho Home, Search, Upload, Preview, User Profile và Admin Dashboard.
@@ -75,7 +71,7 @@ Trong kỳ thực tập, nhóm tập trung vào những phần khả thi và bá
 
 Điều này cũng có nghĩa là không phải mọi thành phần trong sơ đồ kiến trúc đều đã được triển khai đầy đủ 100%. Một số dịch vụ như SQS, CloudWatch, SNS hoặc Glacier hiện đóng vai trò định hướng mở rộng hợp lý hơn là phần đã hoàn thiện hoàn toàn. Việc trình bày rõ như vậy giúp báo cáo trung thực hơn với phạm vi thực tế.
 
-### 6. Lộ trình phát triển đề xuất
+### 5. Lộ trình và mốc triển khai
 **Giai đoạn 1: Hoàn thiện sản phẩm lõi**
 
 - Ổn định trải nghiệm tìm kiếm, upload, preview và điều hướng người dùng.
@@ -94,10 +90,10 @@ Trong kỳ thực tập, nhóm tập trung vào những phần khả thi và bá
 - Thêm monitoring, alerting và logging cho môi trường sẵn sàng triển khai.
 - Tối ưu chi phí bằng lifecycle policy và phân tầng dữ liệu lâu năm.
 
-### 7. Dự toán ngân sách và chi phí vận hành
+### 6. Ước tính ngân sách
 Ảnh dưới đây là bản ước lượng chi phí tháng cho kiến trúc CloudDoc theo mô hình gần production, được tổng hợp từ AWS Pricing Calculator và xuất vào ngày **17/06/2026**:
 
-![CloudDoc AWS Monthly Cost](/fcaj/images/2-Proposal/aws-monthly-cost-cloudoc.jpg)
+<img src="/fcaj/images/2-Proposal/aws-monthly-cost-cloudoc.jpg" alt="CloudDoc AWS Monthly Cost" style="max-width: 90%; height: auto;">
 
 | Hạng mục | Chi phí ước tính / tháng (USD) | Ghi chú |
 | --- | ---: | --- |
@@ -117,7 +113,7 @@ Mức chi phí trên phù hợp hơn với một kiến trúc định hướng p
 - Chỉ bật CloudWatch log chi tiết cho các thành phần thật sự cần theo dõi.
 - Tận dụng IAM Role và S3 Gateway Endpoint để giảm rủi ro cấu hình sai thay vì hard-code access key.
 
-### 8. Rủi ro và phương án giảm thiểu
+### 7. Đánh giá rủi ro
 | Rủi ro | Tác động | Cách giảm thiểu |
 | --- | --- | --- |
 | Sai lệch giữa frontend, backend và luồng presigned URL | Upload lỗi, dữ liệu không đồng bộ | Chuẩn hóa API contract, test từng bước và test end-to-end trước khi demo |
@@ -127,7 +123,7 @@ Mức chi phí trên phù hợp hơn với một kiến trúc định hướng p
 | Thiếu quan sát vận hành khi hệ thống lỗi | Khó phát hiện và xử lý sự cố kịp thời | Thiết lập metric, log, CloudWatch Alarm và SNS notification cho các điểm quan trọng |
 | Phạm vi thực tập không đủ để hoàn thiện toàn bộ kiến trúc | Báo cáo dễ bị hiểu là overclaim | Ghi rõ phần nào đã làm, phần nào là định hướng mở rộng và minh họa bằng roadmap |
 
-### 9. Giá trị mang lại
+### 8. Kết quả kỳ vọng
 CloudDoc mang lại giá trị ở cả ba góc độ:
 
 - **Đối với người dùng cuối:** sinh viên có một nơi tập trung để tìm kiếm và khai thác tài liệu nhanh hơn, đáng tin cậy hơn.

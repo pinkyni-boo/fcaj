@@ -5,37 +5,24 @@ weight: 1
 chapter: false
 pre: " <b> 4.1. </b> "
 ---
+### Event objective
 
-### Event information
+I joined this event to understand how AI, CloudFront, and multi-agent ideas can influence user-facing product design. Because my role in CloudDoc is mainly frontend, I wanted to learn how interface decisions should connect to content delivery, data quality, and long-term feature expansion.
 
-| Item | Details |
-| --- | --- |
-| Event name | AWS Vietnam Community Day in May 2026 within the FCAJ learning and technology-sharing program |
-| Date | **May 23, 2026** |
-| Location | **Bitexco Tower, AWS Office, Ho Chi Minh City** |
-| Participation role | Attendee, note-taker, and learner connecting the session content to the CloudDoc project |
-| Participation format | Joined the technical sharing sessions and summarized the main ideas from the speakers |
+### Speaker
 
-### Main content of the event
+The event brought together AWS community speakers and practitioners who shared real deployment experience, not only theoretical service overviews. What I valued most was their ability to connect architecture topics back to product behavior and user impact.
 
-Event 1 was a knowledge-dense Community Day session with a strong enterprise and architecture-oriented tone. The overall discussion focused on how organizations are approaching AI, how they structure modern systems, and how they think about reliability when new technologies are applied in real production contexts. Instead of talking about isolated tools, the speakers consistently framed technology inside practical operating scenarios: AI is only useful when the input context is good enough, system architecture only scales when layers are clearly separated, and infrastructure decisions always connect back to cost, monitoring, and operational trust.
+### Detailed content
 
-One of the strongest parts of the event was the way AI was discussed from a grounded perspective. AI was not presented as a magical layer that works well on its own. It was presented as something that depends heavily on context, constraints, evidence, and clearly defined goals. From there, the session expanded into multi-agent thinking and explained why more complex, multi-dimensional problems are often better handled through specialized cooperating components rather than a single-agent design.
+The talks explained that AI is only useful when the surrounding context is prepared carefully. That point immediately made me think about CloudDoc search and metadata quality. Another important theme was CloudFront. Instead of being discussed only as a CDN, it was presented as part of the user experience because delivery speed, cache behavior, and reliability all shape how polished a product feels.
 
-Alongside the AI theme, the event also explored content delivery and web-system operations, especially through the role of CloudFront. What stayed with me was not only the performance angle, but also how CloudFront connects to security, resilience, and predictable cost. That helped me understand more clearly that frontend delivery is not only about interface presentation. It is also part of infrastructure design.
+The multi-agent discussion was also interesting from a product perspective. It showed that complex systems often become easier to scale when responsibilities are separated clearly. Even though CloudDoc is not yet a multi-agent system, that idea still relates to our current design because the frontend, backend, storage, and moderation flow each have distinct responsibilities.
 
-Another memorable topic was the discussion around the stability of LLM output. The speakers explained that even when model settings appear deterministic, the real output can still vary because of underlying infrastructure and computation behavior. That gave me a more realistic mindset about AI in production: prompts and models are not enough on their own, and systems still need validation, guardrails, and observability.
+### Experience and reflection
 
-### What I learned from the event
+What stayed with me after the event was the realization that frontend work should not stop at building screens. A good interface also depends on delivery strategy, data structure, and how the rest of the system behaves behind the scenes. This changed the way I looked at CloudDoc. I became more careful about how upload progress, approval state, and preview actions should be communicated to the user.
 
-After attending Event 1, I came away with three important lessons. First, in AI work, the key question is often not which model to use, but whether the context and data preparation are good enough. Second, in system architecture, the clearer the role of each layer, the easier the system becomes to scale and manage. Third, in real operations, performance, cost, and observability have to be considered together rather than separately.
+### Conclusion
 
-These ideas influenced the way I think about CloudDoc quite directly. Before this event, I mostly concentrated on user flows and interface experience. After the event, I became more attentive to metadata quality, delivery architecture, monitoring, and long-term extensibility. I realized that if CloudDoc wants to grow into a smarter platform in the future, its current data and architecture foundation must already be organized well.
-
-### Connection to CloudDoc
-
-This event connected to CloudDoc in three especially clear ways. First, CloudDoc metadata is not only useful for current document search, but can also become the basis for future AI-assisted features. Second, the CloudFront discussion reinforced the decision to deliver the frontend through an S3 and CDN model instead of making the backend handle all content delivery. Third, the conversations about AI reliability and multi-agent design reminded me that any future intelligent layer would still need strong monitoring, control, and explainability.
-
-### Personal reflection
-
-What I appreciated most about Event 1 was that it did more than update me on new technology trends. It helped me connect several areas that are often learned separately: AI, data, architecture, cost, and operations. Because of that, the event did not feel like a simple seminar. It felt like a perspective shift that helped me see CloudDoc less as a UI product and more as a system that needs structured thinking behind the scenes.
+This event helped me connect frontend thinking with cloud architecture. It strengthened my understanding that a good user experience is supported not only by layout and interaction, but also by CDN delivery, structured metadata, and a stable integration flow.

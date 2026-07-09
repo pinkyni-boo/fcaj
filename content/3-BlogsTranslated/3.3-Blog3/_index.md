@@ -5,7 +5,6 @@ weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
-# Using IAM Compute Roles for Server-Side Rendering Applications on AWS Amplify Hosting
 
 The third blog I translated focused on a practical security and operations concern: when building server-side rendering applications such as **Next.js** or **Nuxt** on AWS, how can the server-side code access AWS resources safely without storing `Access Key` or `Secret Key` values in source code or environment variables?
 

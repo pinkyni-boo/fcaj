@@ -6,42 +6,35 @@ chapter: false
 pre: " <b> 5. </b> "
 ---
 
-This workshop is rewritten to match the **CloudDoc** project instead of keeping unrelated AWS lab material. Its main focus is a **secure document upload workflow on AWS**, where the frontend uploads files directly to Amazon S3 through presigned URLs while the backend manages metadata, access control, and related business logic.
 
-I chose this topic because it clearly connects frontend, backend, and cloud architecture in one practical flow. In CloudDoc, changing the upload design changes the whole system direction: backend load is reduced, metadata becomes easier to manage, and the cloud architecture is used more effectively.
+# Building CloudDoc on AWS
 
-### Workshop goals
+#### Workshop overview
 
-- Describe a practical upload workflow suitable for a document-management system.
-- Explain why presigned URLs are a strong fit for CloudDoc.
-- Show the relationship between the frontend upload form, backend APIs, and S3 storage.
-- Clarify security, metadata, access control, and scalability considerations.
+CloudDoc is a student-oriented document sharing platform. Users submit documents from a web interface, the backend handles business rules, Amazon S3 stores document files, the database stores metadata, and administrators approve submissions before they become publicly available. Section 5 is written as an end-to-end workshop so the reader can follow one complete document lifecycle instead of seeing isolated AWS services without context.
 
-### Why this topic fits CloudDoc
+The workshop walks through the full implementation path: preparing the environment, uploading a document, validating that the object is stored correctly in AWS, testing the moderation workflow, synchronizing the visible application state, and finally cleaning up temporary resources to avoid unnecessary cost. This structure helps the report demonstrate design, implementation, validation, and operations together.
 
-CloudDoc handles learning documents, which means:
+#### Objectives
 
-- File volume can grow significantly.
-- Upload flow must be simple and reliable for users.
-- Metadata must remain structured for search and moderation.
-- The architecture should stay extensible for future background processing tasks.
+After reading this workshop, the reader should be able to:
 
-That makes a presigned-URL and S3-focused workshop much more relevant than unrelated AWS lab steps.
+- understand the role of each component in CloudDoc,
+- follow the document upload and approval flow from start to finish,
+- map the AWS Console screenshots to the exact implementation steps,
+- review representative frontend and backend integration snippets,
+- and see that the project includes monitoring, validation, and resource clean-up.
 
-### Workshop content
+#### Expected result
 
-**5.1:** [Workshop overview](5.1-workshop-overview/)
+The final outcome is a system where users can upload documents successfully, administrators can approve documents in the moderation area, approved documents appear in search results, end users can preview or download them, and the environment is monitored with CloudWatch logs, metrics, and alarms.
 
-**5.2:** [Prerequisites](5.2-prerequiste/)
+#### Workshop structure
 
-**5.3:** [Designing a secure Amazon S3 upload flow](5.3-s3-vpc/)
-
-**5.4:** [Integrating APIs, metadata, and user roles](5.4-s3-onprem/)
-
-**5.5:** [Security, operations, and AWS expansion path](5.5-policy/)
-
-**5.6:** [Cleanup and cost control](5.6-cleanup/)
-
-### Learning value
-
-This workshop helped me understand not just one technical trick, but how an architectural decision can influence user experience, backend performance, and future system operations. It also made the connection between my frontend role and the backend/AWS direction of the team much clearer.
+1. [Introduction](5.1-workshop-overview/)
+2. [Prerequisite](5.2-prerequiste/)
+3. [Implement upload and storage flow](5.3-s3-vpc/)
+4. [Test the system end-to-end](5.4-s3-onprem/)
+5. [Client integration and observability](5.5-policy/)
+6. [Update data](5.6-cleanup/)
+7. [Clean resources](5.7-clean-resources/)

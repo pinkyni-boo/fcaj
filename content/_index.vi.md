@@ -5,7 +5,8 @@ weight: 1
 chapter: false
 ---
 
-# Báo cáo thực tập
+<h1 style="text-align: center; color: #5e728b;">BÁO CÁO THỰC TẬP</h1>
+
 ### Thông tin sinh viên:
 <div class="student-profile">
   <div class="student-profile__info">
@@ -20,7 +21,7 @@ chapter: false
     <p><strong>Thời gian thực tập:</strong> 17/04/2026 - 10/07/2026</p>
   </div>
   <div class="student-profile__avatar">
-    <img src="/fcaj/images/2-Proposal/aws-drawio-cloudoc.png" alt="Sơ đồ kiến trúc giải pháp CloudDoc trên AWS" style="width: 100%; max-width: 560px; height: auto; border-radius: 18px; box-shadow: 0 10px 30px rgba(15, 40, 75, 0.12); object-fit: contain;">
+    <img src="/fcaj/images/avatar-thao.jpg" alt="Ảnh đại diện của Vũ Thị Ngọc Thảo" style="width: 100%; max-width: 320px; height: auto; border-radius: 18px; box-shadow: 0 10px 30px rgba(15, 40, 75, 0.12); object-fit: cover;">
   </div>
 </div>
 

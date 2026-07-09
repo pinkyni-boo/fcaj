@@ -15,8 +15,8 @@ home = [ "HTML", "RSS", "JSON"]
   themeVariant = "workshop"
   # Git hub repo link
   editURL = ""
-  description = ""
-  author = "thienlh@thienlu.com"
+  description = "FCAJ Internship Report - Vu Thi Ngoc Thao"
+  author = "Vu Thi Ngoc Thao"
   showVisitedLinks = true
   disableBreadcrumb = false
   disableNextPrev = false

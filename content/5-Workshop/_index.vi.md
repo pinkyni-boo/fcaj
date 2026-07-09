@@ -6,42 +6,35 @@ chapter: false
 pre: " <b> 5. </b> "
 ---
 
-Workshop này được điều chỉnh theo đúng dự án **CloudDoc** thay vì giữ nội dung lab AWS cũ. Trọng tâm của phần này là mô tả cách thiết kế và triển khai một luồng **upload tài liệu an toàn trên AWS**, trong đó frontend tải file trực tiếp lên Amazon S3 bằng presigned URL, còn backend chịu trách nhiệm quản lý metadata, quyền truy cập và các bước nghiệp vụ liên quan.
 
-Sở dĩ tôi chọn chủ đề này cho workshop vì đây là một phần giao thoa rất rõ giữa frontend, backend và cloud architecture. Khi làm CloudDoc, tôi nhận ra rằng chỉ cần thay đổi cách upload file là toàn bộ tư duy hệ thống cũng thay đổi: backend đỡ bị nghẽn hơn, dữ liệu được tách rõ hơn và hạ tầng cloud được khai thác hợp lý hơn.
+# Xây dựng hệ thống CloudDoc trên AWS
 
-### Mục tiêu của workshop
+#### Tổng quan workshop
 
-- Mô tả một luồng upload thực tế phù hợp với bài toán quản lý tài liệu.
-- Giải thích vì sao presigned URL là giải pháp phù hợp cho CloudDoc.
-- Trình bày mối liên hệ giữa frontend form upload, backend API và S3 storage.
-- Làm rõ những điểm cần lưu ý về bảo mật, metadata, quyền truy cập và khả năng mở rộng.
+CloudDoc là dự án quản lý và chia sẻ tài liệu học tập dành cho sinh viên. Trong hệ thống này, người dùng có thể gửi tài liệu từ giao diện web, backend tiếp nhận yêu cầu nghiệp vụ, Amazon S3 chịu trách nhiệm lưu trữ file, cơ sở dữ liệu lưu metadata, còn quản trị viên thực hiện kiểm duyệt trước khi tài liệu được công bố rộng rãi. Mục 5 được viết theo dạng workshop end-to-end để người đọc có thể theo dõi trọn vẹn một vòng đời tài liệu thay vì chỉ xem rời rạc từng dịch vụ AWS.
 
-### Vì sao chủ đề này phù hợp với CloudDoc
+Điểm trọng tâm của workshop là trình bày một luồng kỹ thuật hoàn chỉnh: chuẩn bị môi trường, upload tài liệu, xác nhận file đã được lưu đúng trên AWS, kiểm thử bước kiểm duyệt, đồng bộ dữ liệu hiển thị ra giao diện và cuối cùng là dọn dẹp tài nguyên để tránh phát sinh chi phí không cần thiết. Cách trình bày này giúp bài báo cáo thể hiện được cả phần thiết kế kiến trúc lẫn phần triển khai thực tế, kiểm thử và vận hành.
 
-CloudDoc là hệ thống có đặc thù xử lý tài liệu học tập. Điều đó có nghĩa là:
+#### Mục tiêu
 
-- File có thể nhiều và dung lượng không nhỏ.
-- Người dùng cần upload dễ, nhanh và ít lỗi.
-- Hệ thống cần lưu metadata rõ ràng để phục vụ tìm kiếm và kiểm duyệt.
-- Kiến trúc phải đủ tốt để về sau có thể phát triển thêm các tác vụ nền như trích xuất nội dung hoặc đánh chỉ mục.
+Sau khi đọc xong mục này, người xem có thể:
 
-Một workshop về presigned URL và S3 upload vì thế phù hợp hơn nhiều so với việc giữ các lab AWS rời rạc không liên hệ trực tiếp tới dự án.
+- hiểu vai trò của từng thành phần trong hệ thống CloudDoc,
+- theo dõi được luồng upload và phê duyệt tài liệu từ đầu đến cuối,
+- đối chiếu ảnh AWS Console với từng bước triển khai trong workshop,
+- xem code snippet đại diện cho phần tích hợp frontend và backend,
+- và nhận thấy nhóm có thực hiện cả monitoring, validation lẫn clean-up tài nguyên.
 
-### Nội dung workshop
+#### Kết quả mong đợi
 
-**5.1:** [Tổng quan workshop](5.1-workshop-overview/)
+Kết quả cuối cùng của workshop là một hệ thống trong đó người dùng tải tài liệu lên thành công, quản trị viên duyệt tài liệu trong khu vực quản trị, tài liệu đã duyệt xuất hiện tại trang tìm kiếm, người dùng có thể xem trước hoặc tải xuống, đồng thời hệ thống được theo dõi bằng CloudWatch logs, metrics và alarm.
 
-**5.2:** [Điều kiện chuẩn bị](5.2-prerequiste/)
+#### Cấu trúc workshop
 
-**5.3:** [Thiết kế luồng upload bảo mật với Amazon S3](5.3-s3-vpc/)
-
-**5.4:** [Tích hợp API, metadata và vai trò người dùng](5.4-s3-onprem/)
-
-**5.5:** [Bảo mật, vận hành và định hướng mở rộng AWS](5.5-policy/)
-
-**5.6:** [Dọn dẹp tài nguyên và kiểm soát chi phí](5.6-cleanup/)
-
-### Giá trị học được
-
-Thông qua workshop này, tôi không chỉ hiểu rõ hơn một kỹ thuật cụ thể, mà còn hiểu cách một quyết định kiến trúc có thể ảnh hưởng tới trải nghiệm người dùng, hiệu năng backend và khả năng vận hành hệ thống trong tương lai. Đây cũng là một trong những phần giúp tôi nhìn rõ nhất mối liên hệ giữa vai trò frontend của mình với phần backend/AWS mà nhóm đang xây dựng.
+1. [Giới thiệu](5.1-workshop-overview/)
+2. [Điều kiện tiên quyết](5.2-prerequiste/)
+3. [Triển khai luồng upload và lưu trữ tài liệu](5.3-s3-vpc/)
+4. [Kiểm thử hệ thống end-to-end](5.4-s3-onprem/)
+5. [Tích hợp ứng dụng khách và quan sát hệ thống](5.5-policy/)
+6. [Cập nhật dữ liệu](5.6-cleanup/)
+7. [Dọn dẹp tài nguyên](5.7-clean-resources/)

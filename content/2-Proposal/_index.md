@@ -5,7 +5,6 @@ weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-# Proposal: CloudDoc Platform for HUTECH Students
 ## A document management and learning-resource discovery platform designed with AWS deployment in mind
 
 ### 1. Executive summary
@@ -15,7 +14,7 @@ During this internship, my main contribution focused on frontend development, wh
 
 The key idea behind the proposal is that CloudDoc should not be treated as a simple file-sharing website. Instead, it should be designed as a layered system where presentation, business logic, metadata management, and file storage are separated clearly enough to scale in future phases.
 
-### 2. Context and practical need
+### 2. Problem statement
 In many student environments, learning materials are scattered across personal drives, chat groups, temporary links, and loosely organized folders. This creates several practical issues:
 
 - Students spend unnecessary time searching for the right file or the most reliable version.
@@ -23,9 +22,6 @@ In many student environments, learning materials are scattered across personal d
 - Files are often duplicated, mislabeled, or lost when old links expire.
 - New users have difficulty identifying which resources are useful and trustworthy.
 
-For HUTECH students, a centralized learning-resource platform would reduce friction, improve self-study, and create a more structured academic knowledge base. CloudDoc is proposed as a direct response to that need.
-
-### 3. Problem statement
 **Current challenges**
 
 If the entire upload and download flow is routed through the application server, the backend quickly becomes a bottleneck as file size and user traffic increase. In addition, when file storage and metadata are not separated, it becomes harder to scale search, preview, moderation, and access-control features.
@@ -44,10 +40,10 @@ CloudDoc is proposed with the following structure:
 
 The most important design choice is to let the frontend upload files directly to S3 through presigned URLs while the backend focuses on metadata and business logic. This is a practical architecture for a document-centric platform expected to grow over time.
 
-### 4. Solution architecture
+### 3. Solution architecture
 The architecture below illustrates the AWS-oriented direction for CloudDoc across the content-delivery layer, application layer, data layer, and operational support layer:
 
-![CloudDoc AWS Architecture](/fcaj/images/2-Proposal/aws-drawio-cloudoc.png)
+<img src="/fcaj/images/2-Proposal/aws-drawio-cloudoc.png" alt="CloudDoc AWS Architecture" style="max-width: 90%; height: auto;">
 
 **Main component explanation**
 
@@ -64,7 +60,7 @@ The architecture below illustrates the AWS-oriented direction for CloudDoc acros
 
 This architecture shows that CloudDoc is not only a UI exercise. It is framed as a complete system with content delivery, application processing, structured metadata, object storage, and operational readiness. That perspective is important because it creates a realistic roadmap from internship demo to a more production-like platform.
 
-### 5. Actual internship implementation scope
+### 4. Technical implementation
 The practical internship scope stayed aligned with what the team could realistically complete in the current codebase:
 
 - Building the React frontend for Home, Search, Upload, Preview, User Profile, and Admin Dashboard pages.
@@ -75,7 +71,7 @@ The practical internship scope stayed aligned with what the team could realistic
 
 This also means that not every AWS component in the architecture was fully implemented during the internship. Services such as SQS, CloudWatch, SNS, and Glacier currently represent a justified future direction rather than a fully completed delivery. Making that distinction explicit keeps the proposal honest and technically credible.
 
-### 6. Proposed roadmap
+### 5. Roadmap and milestones
 **Phase 1: Core product stabilization**
 
 - Finalize search, upload, preview, and navigation experience.
@@ -94,10 +90,10 @@ This also means that not every AWS component in the architecture was fully imple
 - Improve monitoring, alerting, and logging for deployment readiness.
 - Apply storage lifecycle optimization for older, less frequently accessed documents.
 
-### 7. Budget estimate and operating cost
+### 6. Budget estimate
 The image below summarizes the estimated monthly cost of the CloudDoc architecture in a near-production setup. The estimate is based on an AWS Pricing Calculator snapshot exported on **June 17, 2026**:
 
-![CloudDoc AWS Monthly Cost](/fcaj/images/2-Proposal/aws-monthly-cost-cloudoc.jpg)
+<img src="/fcaj/images/2-Proposal/aws-monthly-cost-cloudoc.jpg" alt="CloudDoc AWS Monthly Cost" style="max-width: 90%; height: auto;">
 
 | Item | Estimated monthly cost (USD) | Notes |
 | --- | ---: | --- |
@@ -117,7 +113,7 @@ This cost profile is more suitable for a production-oriented architecture or a f
 - Enabling detailed CloudWatch logging only where it creates real value.
 - Using IAM Roles and an S3 Gateway Endpoint instead of hard-coded access keys.
 
-### 8. Risks and mitigation plan
+### 7. Risk assessment
 | Risk | Impact | Mitigation |
 | --- | --- | --- |
 | Misalignment between frontend, backend, and the presigned URL upload flow | Upload failures and inconsistent data flow | Standardize API contracts and validate the upload path end-to-end before demo |
@@ -127,7 +123,7 @@ This cost profile is more suitable for a production-oriented architecture or a f
 | Limited operational visibility during incidents | Slow diagnosis and unstable troubleshooting | Add metrics, logs, CloudWatch alarms, and SNS notifications for critical components |
 | Internship scope is smaller than the full target architecture | Readers may assume the team over-claimed implementation | Clearly mark what was completed and what remains a future-ready design direction |
 
-### 9. Expected value
+### 8. Expected outcomes
 CloudDoc provides value at three levels:
 
 - **For end users:** students get a centralized and more trustworthy place to find and contribute learning resources.

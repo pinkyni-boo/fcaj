@@ -1,26 +1,30 @@
 ---
-title: "Workshop overview"
+title: "Introduction"
 date: 2024-01-01
 weight: 1
 chapter: false
 pre: " <b> 5.1. </b> "
 ---
-### Goal
 
-This workshop explains the CloudDoc document flow from both a technical and practical perspective. The goal is not only to upload files to the cloud, but also to keep the user experience smooth, the backend light, and the architecture extensible.
 
-### Problem
+#### Objective
 
-CloudDoc must satisfy three requirements at the same time:
+This section introduces the workshop scope and the problem that CloudDoc is solving. Before moving into implementation steps, the reader needs a clear view of the document lifecycle, the reason the project separates frontend, backend, storage, and database responsibilities, and the AWS services that support the full workflow.
 
-- Users need a simple upload experience.
-- The system should avoid routing large files through the backend.
-- Metadata must remain structured for search, preview, and moderation.
+#### Problem context
 
-### Why upload design matters
+In practice, a learning document platform needs more than a successful file upload. It must track document state, support moderation before publication, and provide stable access for end users. If every file passed through the application server, the system would consume more compute resources and become harder to scale cost-effectively. For that reason, CloudDoc uses a flow where the frontend requests upload instructions from the backend and then sends the file directly to Amazon S3.
 
-In small applications, file upload is often implemented in the simplest possible way. But for a document platform, that choice directly affects performance, maintainability, and architectural quality. That is why this workshop focuses on upload flow as a system-design decision, not just a coding task.
+#### Workshop flow
 
-### Approach
+1. A user fills in document metadata and selects a file in the web interface.
+2. The backend validates the request and generates a presigned upload URL.
+3. The browser uploads the file directly to S3.
+4. Metadata is stored in the database with an initial `pending` state.
+5. An administrator reviews and approves the document.
+6. The approved document appears in search, preview, and download features.
 
-The most suitable approach is for the backend to generate a **presigned URL**, then let the frontend upload directly to **Amazon S3**. After the upload succeeds, the frontend submits metadata to the backend and stores it in **PostgreSQL**.
+#### Subsections
+
+1. [What is CloudDoc?](5.1.1-what-is-clouddoc/)
+2. [Services](5.1.2-services-used/)

@@ -5,9 +5,8 @@ weight: 2
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
-# Embedding a GenAI Assistant into Internal Applications with AWS Amplify, AWS CDK, and Amazon Q Business
 
-![Blog 2 Illustration](/fcaj/images/3-BlogsTranslated/blog2-doc-image.png)
+<img src="/fcaj/images/3-BlogsTranslated/blog2-doc-image.png" alt="Blog 2 Illustration" style="max-width: 90%; height: auto;">
 
 The second blog I translated focused on a growing enterprise need: letting users ask natural-language questions over internal documents instead of manually searching through files and folders. AWS presented a solution built with **Amazon Q Business**, **AWS Amplify Gen 2**, and **AWS CDK** to support this kind of intelligent internal knowledge access with controlled permissions.
 

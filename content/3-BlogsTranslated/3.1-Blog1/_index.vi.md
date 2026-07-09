@@ -5,9 +5,8 @@ weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-# Xây dựng ứng dụng Offline-First với AWS Amplify, TanStack Query, AppSync và MongoDB Atlas
 
-![Minh họa Blog 1](/fcaj/images/3-BlogsTranslated/blog1-doc-image.png)
+<img src="/fcaj/images/3-BlogsTranslated/blog1-doc-image.png" alt="Minh họa Blog 1" style="max-width: 90%; height: auto;">
 
 Blog đầu tiên tôi chọn dịch xoay quanh bài toán rất thực tế: làm sao để ứng dụng web hoặc mobile vẫn mang lại trải nghiệm mượt mà khi kết nối mạng chập chờn hoặc tạm thời bị mất. Thay vì chờ server phản hồi rồi mới cập nhật giao diện, kiến trúc offline-first kết hợp với optimistic UI cho phép người dùng thấy kết quả gần như ngay lập tức, sau đó hệ thống mới đồng bộ dữ liệu ở phía sau.
 

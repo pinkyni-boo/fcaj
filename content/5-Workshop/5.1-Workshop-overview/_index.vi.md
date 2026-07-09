@@ -1,26 +1,34 @@
 ---
-title: "Tổng quan workshop"
+title: "Giới thiệu"
 date: 2024-01-01
 weight: 1
 chapter: false
 pre: " <b> 5.1. </b> "
 ---
-### Mục tiêu
 
-Workshop này mô tả luồng xử lý tài liệu của CloudDoc dưới góc nhìn kỹ thuật và triển khai thực tế. Mục tiêu không chỉ là tải file lên cloud, mà còn phải đảm bảo trải nghiệm người dùng mượt, dễ mở rộng và phù hợp với mô hình phân quyền trong môi trường học tập.
 
-### Bài toán
+#### Mục tiêu
 
-CloudDoc cần giải quyết đồng thời ba yêu cầu:
+Phần này giới thiệu phạm vi của workshop và bài toán mà CloudDoc đang giải quyết. Trước khi đi vào các thao tác triển khai, người đọc cần hiểu tài liệu trong hệ thống đi qua những bước nào, vì sao dự án phải tách frontend, backend, lưu trữ và cơ sở dữ liệu thành các thành phần riêng, đồng thời những dịch vụ AWS nào tham gia vào toàn bộ quy trình đó.
 
-- Người dùng phải tải tài liệu lên một cách đơn giản.
-- Hệ thống không bị nghẽn vì file lớn đi qua backend.
-- Metadata vẫn được kiểm soát tốt để hỗ trợ tìm kiếm, preview và kiểm duyệt.
+#### Bối cảnh bài toán
 
-### Tại sao luồng upload lại quan trọng
+Trong thực tế, tài liệu học tập không chỉ cần được tải lên thành công mà còn phải được quản lý theo trạng thái, kiểm duyệt trước khi công bố và đảm bảo khả năng truy cập ổn định cho người dùng cuối. Nếu toàn bộ file đều đi qua application server, hệ thống sẽ tốn tài nguyên xử lý, khó mở rộng và khó tối ưu chi phí khi số lượng tài liệu tăng lên. Vì vậy, kiến trúc CloudDoc được tổ chức theo hướng frontend gửi yêu cầu đến backend để lấy thông tin upload an toàn, sau đó file được đưa trực tiếp lên Amazon S3.
 
-Trong nhiều hệ thống nhỏ, việc upload thường được làm khá đơn giản: người dùng gửi file về backend, backend nhận file rồi lưu lại. Cách này dễ làm ở giai đoạn đầu nhưng sẽ nhanh chóng bộc lộ nhược điểm khi dung lượng file lớn hơn hoặc số lượng người dùng tăng lên. Với CloudDoc, việc chọn đúng luồng upload là quyết định ảnh hưởng trực tiếp tới trải nghiệm người dùng, hiệu năng backend và hướng phát triển về sau.
+#### Luồng tổng quát của workshop
 
-### Cách tiếp cận
+Workshop tập trung vào một hành trình hoàn chỉnh của tài liệu:
 
-Giải pháp phù hợp là để backend tạo **presigned URL**, sau đó frontend tải file trực tiếp lên **Amazon S3**. Sau khi upload thành công, frontend gửi metadata về backend để lưu vào **PostgreSQL**. Cách làm này giảm tải cho server ứng dụng và tách rõ phần file với phần dữ liệu nghiệp vụ.
+1. Người dùng điền metadata và chọn file cần tải lên từ giao diện web.
+2. Backend xác thực đầu vào, sinh presigned URL và khóa lưu trữ cho file.
+3. Trình duyệt upload trực tiếp file lên S3 thay vì gửi toàn bộ binary qua server.
+4. Metadata được ghi vào cơ sở dữ liệu với trạng thái ban đầu là `pending`.
+5. Quản trị viên kiểm duyệt tài liệu trong khu vực quản trị.
+6. Sau khi được duyệt, tài liệu xuất hiện trong trang tìm kiếm, xem trước và tải xuống.
+
+#### Các nội dung tiếp theo
+
+Hai mục con bên dưới đóng vai trò nền tảng cho toàn bộ workshop:
+
+1. [CloudDoc là gì?](5.1.1-what-is-clouddoc/)
+2. [Dịch vụ sử dụng](5.1.2-services-used/)

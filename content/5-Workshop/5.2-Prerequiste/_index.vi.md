@@ -1,32 +1,29 @@
 ---
-title: "Điều kiện chuẩn bị"
+title: "Điều kiện tiên quyết"
 date: 2024-01-01
 weight: 2
 chapter: false
 pre: " <b> 5.2. </b> "
 ---
-### Thành phần cần có
 
-- Frontend React có form upload và các trường metadata.
-- Backend Express có API tạo presigned URL và API lưu metadata tài liệu.
-- PostgreSQL để lưu title, subject, school, department, uploader, trạng thái và đường dẫn S3.
-- Một S3 bucket dành riêng cho tài liệu upload.
 
-### Cấu hình kỹ thuật
+#### Mục tiêu
 
-- Biến môi trường cho bucket S3, thời gian hết hạn presigned URL và thông tin kết nối cơ sở dữ liệu.
-- CORS trên S3 phải cho phép domain frontend truy cập để upload trực tiếp.
-- IAM role hoặc access policy chỉ nên cấp đúng quyền cần thiết cho backend.
+Trước khi bắt đầu workflow upload và kiểm thử end-to-end, cần xác nhận rằng môi trường triển khai đã đầy đủ và tài nguyên AWS đang ở trạng thái sẵn sàng. Nếu bước chuẩn bị bị bỏ qua, các lỗi như sai endpoint, CORS không hợp lệ, EC2 không phản hồi hoặc RDS chưa sẵn sàng sẽ làm cho phần triển khai phía sau khó kiểm chứng và khó chụp minh họa đúng flow.
 
-### Điều kiện kiểm thử
+#### Thành phần cần kiểm tra
 
-Trước khi kiểm thử end-to-end, cần xác nhận:
+- Giao diện web mở được và form upload hoạt động.
+- Backend API chạy ổn định.
+- Bucket S3 đã tồn tại và cấu hình CORS hợp lệ.
+- RDS PostgreSQL kết nối được.
+- Tài liệu mẫu đã sẵn sàng để đưa vào hệ thống.
 
-- Frontend gọi được API backend.
-- Backend tạo được upload URL hợp lệ.
-- Bucket S3 nhận được file.
-- Metadata sau upload được lưu đúng trong PostgreSQL.
+#### Ý nghĩa của bước chuẩn bị
 
-### Ý nghĩa của bước chuẩn bị
+Phần này giúp người đọc thấy rằng nhóm không triển khai theo kiểu thử ngẫu nhiên từng dịch vụ, mà thực sự có một bước pre-check trước khi đi vào luồng chính. Khi frontend, backend, S3 và database đều đã được xác minh, các bước sau như upload, moderation và đồng bộ trạng thái sẽ có giá trị chứng minh cao hơn trong báo cáo.
 
-Phần chuẩn bị nghe có vẻ đơn giản nhưng lại quyết định rất nhiều đến độ ổn định của toàn bộ luồng upload. Chỉ cần sai một cấu hình CORS, một biến môi trường hoặc một quyền IAM là toàn bộ trải nghiệm người dùng có thể thất bại dù frontend và backend đều “đúng code”. Vì vậy, bước này đóng vai trò như nền móng kỹ thuật cho workshop.
+#### Các bước thực hiện
+
+1. [Kiểm tra môi trường triển khai](5.2.1-verify-frontend-readiness/)
+2. [Chuẩn bị dữ liệu và cấu hình hệ thống](5.2.2-prepare-source-data/)

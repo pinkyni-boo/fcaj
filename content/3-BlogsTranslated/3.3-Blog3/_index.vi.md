@@ -5,7 +5,6 @@ weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
-# Tích hợp IAM Compute Roles cho ứng dụng Server-Side Rendering trên AWS Amplify Hosting
 
 Blog thứ ba tôi chọn dịch nói về một vấn đề bảo mật và vận hành rất thiết thực: khi xây dựng các ứng dụng server-side rendering như **Next.js** hoặc **Nuxt** trên AWS, làm sao để phần server của ứng dụng có thể truy cập tài nguyên AWS một cách an toàn mà không cần lưu `Access Key` hoặc `Secret Key` trong source code hay biến môi trường.
 

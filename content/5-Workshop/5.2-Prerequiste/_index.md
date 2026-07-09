@@ -1,32 +1,25 @@
 ---
-title: "Prerequisites"
+title: "Prerequisite"
 date: 2024-01-01
 weight: 2
 chapter: false
 pre: " <b> 5.2. </b> "
 ---
-### Required components
 
-- A React frontend with an upload form and metadata fields.
-- An Express backend with a presigned URL API and a metadata creation API.
-- PostgreSQL for document-related structured data.
-- A dedicated S3 bucket for uploaded documents.
 
-### Technical setup
+#### Objective
 
-- Environment variables for S3, database access, and presigned URL expiration.
-- Correct CORS configuration on S3.
-- Limited IAM permissions for the backend.
+This section confirms that the environment is ready before the upload and end-to-end workflow begins. Without this preparation, issues such as incorrect endpoints, invalid CORS configuration, unresponsive EC2 instances, or unavailable database resources would weaken the later validation steps.
 
-### Test readiness
+#### Items to verify
 
-Before end-to-end testing, verify:
+- the web interface is reachable,
+- the backend API responds correctly,
+- the S3 bucket exists and accepts the intended upload flow,
+- the PostgreSQL database is available,
+- and sample documents are ready for testing.
 
-- The frontend can call the backend API.
-- The backend can generate a valid upload URL.
-- S3 receives the uploaded file.
-- Metadata is stored correctly after upload.
+#### Subsections
 
-### Why this preparation matters
-
-Upload workflows often fail not because of UI logic, but because of small configuration issues such as CORS, IAM scope, or missing environment settings. That makes preparation a critical part of the design.
+1. [Verify the environment](5.2.1-verify-frontend-readiness/)
+2. [Prepare source data and configuration](5.2.2-prepare-source-data/)

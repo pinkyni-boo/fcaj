@@ -1,30 +1,64 @@
 ---
-title: "Thiết kế luồng upload bảo mật với Amazon S3"
+title: "Triển khai luồng upload và lưu trữ tài liệu"
 date: 2024-01-01
 weight: 3
 chapter: false
 pre: " <b> 5.3. </b> "
 ---
-### Luồng xử lý đề xuất
 
-1. Người dùng chọn file và nhập metadata trên giao diện CloudDoc.
-2. Frontend gửi yêu cầu tới backend để xin presigned upload URL.
-3. Backend tạo S3 key phù hợp và trả về URL có thời hạn ngắn.
-4. Frontend `PUT` file trực tiếp lên S3.
-5. Khi upload thành công, frontend tiếp tục gọi API lưu metadata vào PostgreSQL.
 
-### Vì sao chọn presigned URL
+#### Mục tiêu
 
-- Giảm tải cho backend vì file không đi xuyên qua application server.
-- Nâng cao bảo mật vì URL chỉ có hiệu lực trong thời gian ngắn.
-- Dễ mở rộng khi số lượng tài liệu và người dùng tăng lên.
+Phần này mô tả bước triển khai quan trọng nhất của workshop: đưa một tài liệu từ giao diện web vào hệ thống CloudDoc bằng cách sử dụng presigned URL và Amazon S3. Đây là đoạn nối giữa trải nghiệm người dùng ở frontend và logic nghiệp vụ ở backend, đồng thời cũng là bằng chứng rõ nhất cho việc dự án đã được triển khai end-to-end chứ không chỉ dừng ở mockup giao diện.
 
-### Điểm cần chú ý
+#### Thành phần chính
 
-- Kiểm soát kích thước file và định dạng tài liệu ngay từ frontend và backend.
-- Sinh S3 key có cấu trúc rõ ràng để dễ quản lý.
-- Không cho phép frontend tự ý ghi metadata nếu upload thực tế chưa thành công.
+- Form upload trên frontend.
+- API tạo presigned upload URL.
+- Bucket S3 dành cho file tài liệu.
+- Cơ chế lưu metadata vào cơ sở dữ liệu.
 
-### Ý nghĩa về mặt kiến trúc
+#### Luồng xử lý tiêu biểu
 
-Đây là phần quan trọng nhất của workshop vì nó thể hiện rõ tư duy “dùng cloud đúng chỗ”. Thay vì để backend ôm cả việc truyền file lẫn xử lý nghiệp vụ, presigned URL giúp tách trách nhiệm rõ ràng: S3 chịu trách nhiệm lưu trữ file, backend chịu trách nhiệm kiểm soát nghiệp vụ, còn frontend chịu trách nhiệm luồng tương tác với người dùng.
+Trong kiến trúc này, backend không nhận trực tiếp toàn bộ file binary. Thay vào đó, backend xác thực yêu cầu, sinh khóa lưu trữ và presigned URL, sau đó frontend mới gửi file trực tiếp lên S3. Cách làm này giúp giảm tải cho server, đơn giản hóa đường truyền file và phù hợp hơn với yêu cầu mở rộng của một nền tảng lưu trữ tài liệu.
+
+#### Code snippet
+
+```jsx
+const upload = await presignUpload({
+  fileName: file.name,
+  fileType,
+  contentType: file.type || "application/octet-stream",
+  fileSizeBytes: file.size,
+})
+
+await uploadFileToS3(upload.uploadUrl, file)
+```
+
+```js
+documentsRouter.post("/presign-upload", async (req, res) => {
+  const input = presignUploadSchema.parse(req.body)
+  const key = createDocumentKey(input)
+  const uploadUrl = await createPresignedUploadUrl({ key, contentType: input.contentType })
+  res.status(201).json({ data: { key, uploadUrl, method: "PUT" } })
+})
+```
+
+#### Các bước thực hiện luồng upload
+
+**Bước 1:** Người dùng truy cập trang chủ, điền thông tin và chọn file cần upload trên form giao diện.
+
+<img src="/fcaj/images/5-Workshop/AWS-Console/frontend-upload-form.png" alt="Biểu mẫu upload tài liệu trên giao diện CloudDoc" style="max-width: 90%; height: auto;">
+
+**Bước 2:** Hệ thống tiến hành lấy presigned URL từ backend và tải trực tiếp file từ trình duyệt lên S3.
+
+<img src="/fcaj/images/5-Workshop/AWS-Console/frontend-upload-progress.png" alt="Trạng thái đang upload file từ trình duyệt lên S3" style="max-width: 90%; height: auto;">
+
+**Bước 3:** Sau khi upload S3 và lưu metadata thành công, hệ thống hiển thị thông báo thành công cho người dùng.
+
+<img src="/fcaj/images/5-Workshop/AWS-Console/frontend-upload-success.png" alt="Thông báo upload thành công sau khi hệ thống hoàn tất bước gửi file" style="max-width: 90%; height: auto;">
+
+#### Các bước thực hiện
+
+1. [Khởi tạo luồng upload](5.3.1-build-upload-interaction/)
+2. [Kiểm tra lưu trữ và đồng bộ dữ liệu](5.3.2-connect-form-to-backend/)
