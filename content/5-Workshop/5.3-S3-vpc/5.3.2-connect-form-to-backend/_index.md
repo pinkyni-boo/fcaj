@@ -17,7 +17,7 @@ After the upload completes, verify the following:
 
 **Step 1:** Check if the **File has appeared in the S3 bucket**. A new object confirms the presigned URL upload flow was successful.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/s3-object-created.png" alt="Uploaded object visible in S3" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/s3-object-created.png" alt="Uploaded object visible in S3" style="max-width: 90%; height: auto;">
 
 **Step 2:** Ensure the **Metadata has been written to the database**.
 

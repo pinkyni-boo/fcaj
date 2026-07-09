@@ -44,15 +44,15 @@ documentsRouter.post("/presign-upload", async (req, res) => {
 
 **Step 1:** The user fills in the form and selects a file to upload via the CloudDoc interface.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/frontend-upload-form.png" alt="Upload form in CloudDoc" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/frontend-upload-form.png" alt="Upload form in CloudDoc" style="max-width: 90%; height: auto;">
 
 **Step 2:** The application retrieves a presigned URL and uploads the file directly from the browser to Amazon S3.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/frontend-upload-progress.png" alt="Upload in progress from browser to S3" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/frontend-upload-progress.png" alt="Upload in progress from browser to S3" style="max-width: 90%; height: auto;">
 
 **Step 3:** A success notification is shown once the file upload to S3 and metadata save are completed.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/frontend-upload-success.png" alt="Successful upload notification" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/frontend-upload-success.png" alt="Successful upload notification" style="max-width: 90%; height: auto;">
 
 #### Subsections
 

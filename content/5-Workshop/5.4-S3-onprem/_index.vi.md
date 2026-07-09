@@ -17,15 +17,15 @@ Quy trình kiểm thử được thực hiện theo thứ tự sau:
 
 **Bước 1:** Xác nhận tài liệu xuất hiện trong dashboard quản trị với trạng thái chờ duyệt (`pending`).
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/admin-approve-dashboard.png" alt="Dashboard admin hiển thị tài liệu đang chờ duyệt" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/admin-approve-dashboard.png" alt="Dashboard admin hiển thị tài liệu đang chờ duyệt" style="max-width: 90%; height: auto;">
 
 **Bước 2:** Thực hiện thao tác approve từ phía quản trị viên. Kiểm tra phản hồi thành công (toast message) và trạng thái của tài liệu được cập nhật sang `approved`.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/admin-approve-toast.png" alt="Thông báo xác nhận sau khi admin duyệt và xuất bản tài liệu" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/admin-approve-toast.png" alt="Thông báo xác nhận sau khi admin duyệt và xuất bản tài liệu" style="max-width: 90%; height: auto;">
 
 **Bước 3:** Truy cập lại trang tìm kiếm công khai để xác nhận tài liệu đã xuất hiện. Bạn có thể tiếp tục thử hành vi xem trước hoặc tải xuống để bảo đảm tài liệu hiển thị đúng trên giao diện người dùng.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/search-result.png" alt="Trang kết quả tìm kiếm hiển thị tài liệu đã được duyệt" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/search-result.png" alt="Trang kết quả tìm kiếm hiển thị tài liệu đã được duyệt" style="max-width: 90%; height: auto;">
 
 #### Kết luận kiểm thử
 

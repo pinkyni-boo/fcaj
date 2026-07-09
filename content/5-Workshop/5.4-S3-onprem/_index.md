@@ -15,12 +15,12 @@ This section proves that a document truly moves through the full CloudDoc workfl
 
 **Step 1:** Confirm the uploaded document appears in the admin moderation dashboard with a `pending` state.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/admin-approve-dashboard.png" alt="Admin dashboard with pending document" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/admin-approve-dashboard.png" alt="Admin dashboard with pending document" style="max-width: 90%; height: auto;">
 
 **Step 2:** Approve the document from the administrator view and check the success response (toast notification).
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/admin-approve-toast.png" alt="Approval success notification" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/admin-approve-toast.png" alt="Approval success notification" style="max-width: 90%; height: auto;">
 
 **Step 3:** Open the search page again and confirm that the document is visible. You can continue with preview or download access to verify that the state change is reflected in the user interface.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/search-result.png" alt="Approved document in search results" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/search-result.png" alt="Approved document in search results" style="max-width: 90%; height: auto;">

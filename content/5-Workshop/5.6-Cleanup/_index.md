@@ -19,6 +19,6 @@ Once a document is approved, the state change must be synchronized across the ba
 
 **Step 3:** Reflect the updated state in the search page. The frontend must fetch the fresh data to keep the system consistent for users.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/search-result.png" alt="Approved document shown in search results" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/search-result.png" alt="Approved document shown in search results" style="max-width: 90%; height: auto;">
 
 **Step 4:** Allow preview and download options for the approved document in the user interface.

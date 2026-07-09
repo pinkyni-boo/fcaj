@@ -17,7 +17,7 @@ Sau khi upload hoàn tất, cần xác minh:
 
 **Bước 1:** Kiểm tra **File đã xuất hiện trong S3 bucket** chưa. Nếu có object mới nghĩa là luồng upload trực tiếp bằng presigned URL đã thành công.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/s3-object-created.png" alt="Object mới đã xuất hiện trong S3 sau khi người dùng upload tài liệu" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/s3-object-created.png" alt="Object mới đã xuất hiện trong S3 sau khi người dùng upload tài liệu" style="max-width: 90%; height: auto;">
 
 **Bước 2:** Xác nhận **Metadata đã được ghi vào cơ sở dữ liệu**.
 

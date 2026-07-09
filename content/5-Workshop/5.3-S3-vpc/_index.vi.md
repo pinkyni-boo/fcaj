@@ -48,15 +48,15 @@ documentsRouter.post("/presign-upload", async (req, res) => {
 
 **Bước 1:** Người dùng truy cập trang chủ, điền thông tin và chọn file cần upload trên form giao diện.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/frontend-upload-form.png" alt="Biểu mẫu upload tài liệu trên giao diện CloudDoc" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/frontend-upload-form.png" alt="Biểu mẫu upload tài liệu trên giao diện CloudDoc" style="max-width: 90%; height: auto;">
 
 **Bước 2:** Hệ thống tiến hành lấy presigned URL từ backend và tải trực tiếp file từ trình duyệt lên S3.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/frontend-upload-progress.png" alt="Trạng thái đang upload file từ trình duyệt lên S3" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/frontend-upload-progress.png" alt="Trạng thái đang upload file từ trình duyệt lên S3" style="max-width: 90%; height: auto;">
 
 **Bước 3:** Sau khi upload S3 và lưu metadata thành công, hệ thống hiển thị thông báo thành công cho người dùng.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/frontend-upload-success.png" alt="Thông báo upload thành công sau khi hệ thống hoàn tất bước gửi file" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/frontend-upload-success.png" alt="Thông báo upload thành công sau khi hệ thống hoàn tất bước gửi file" style="max-width: 90%; height: auto;">
 
 #### Các bước thực hiện
 

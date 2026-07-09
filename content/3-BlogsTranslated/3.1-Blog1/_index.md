@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 3.1. </b> "
 ---
 
-<img src="/fcaj/images/3-BlogsTranslated/blog1-doc-image.png" alt="Blog 1 Illustration" style="max-width: 90%; height: auto;">
+<img src="/images/3-BlogsTranslated/blog1-doc-image.png" alt="Blog 1 Illustration" style="max-width: 90%; height: auto;">
 
 The first blog I translated focused on a very practical product problem: how to keep a web or mobile application smooth even when network connectivity is unstable or temporarily unavailable. Instead of waiting for the server to respond before updating the interface, an offline-first architecture combined with optimistic UI allows users to see immediate feedback while synchronization happens in the background.
 

@@ -43,7 +43,7 @@ The most important design choice is to let the frontend upload files directly to
 ### 3. Solution architecture
 The architecture below illustrates the AWS-oriented direction for CloudDoc across the content-delivery layer, application layer, data layer, and operational support layer:
 
-<img src="/fcaj/images/2-Proposal/aws-drawio-cloudoc.png" alt="CloudDoc AWS Architecture" style="max-width: 90%; height: auto;">
+<img src="/images/2-Proposal/aws-drawio-cloudoc.png" alt="CloudDoc AWS Architecture" style="max-width: 90%; height: auto;">
 
 **Main component explanation**
 
@@ -93,7 +93,7 @@ This also means that not every AWS component in the architecture was fully imple
 ### 6. Budget estimate
 The image below summarizes the estimated monthly cost of the CloudDoc architecture in a near-production setup. The estimate is based on an AWS Pricing Calculator snapshot exported on **June 17, 2026**:
 
-<img src="/fcaj/images/2-Proposal/aws-monthly-cost-cloudoc.jpg" alt="CloudDoc AWS Monthly Cost" style="max-width: 90%; height: auto;">
+<img src="/images/2-Proposal/aws-monthly-cost-cloudoc.jpg" alt="CloudDoc AWS Monthly Cost" style="max-width: 90%; height: auto;">
 
 | Item | Estimated monthly cost (USD) | Notes |
 | --- | ---: | --- |

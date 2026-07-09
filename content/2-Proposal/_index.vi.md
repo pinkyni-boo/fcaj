@@ -43,7 +43,7 @@ Mấu chốt của giải pháp là cho frontend upload trực tiếp lên S3 b�
 ### 3. Kiến trúc giải pháp
 Kiến trúc dưới đây mô tả định hướng triển khai CloudDoc trên AWS với lớp phân phối nội dung, lớp ứng dụng, lớp dữ liệu và lớp giám sát vận hành:
 
-<img src="/fcaj/images/2-Proposal/aws-drawio-cloudoc.png" alt="CloudDoc AWS Architecture" style="max-width: 90%; height: auto;">
+<img src="/images/2-Proposal/aws-drawio-cloudoc.png" alt="CloudDoc AWS Architecture" style="max-width: 90%; height: auto;">
 
 **Mô tả các thành phần chính**
 
@@ -93,7 +93,7 @@ Trong kỳ thực tập, nhóm tập trung vào những phần khả thi và bá
 ### 6. Ước tính ngân sách
 Ảnh dưới đây là bản ước lượng chi phí tháng cho kiến trúc CloudDoc theo mô hình gần production, được tổng hợp từ AWS Pricing Calculator và xuất vào ngày **17/06/2026**:
 
-<img src="/fcaj/images/2-Proposal/aws-monthly-cost-cloudoc.jpg" alt="CloudDoc AWS Monthly Cost" style="max-width: 90%; height: auto;">
+<img src="/images/2-Proposal/aws-monthly-cost-cloudoc.jpg" alt="CloudDoc AWS Monthly Cost" style="max-width: 90%; height: auto;">
 
 | Hạng mục | Chi phí ước tính / tháng (USD) | Ghi chú |
 | --- | ---: | --- |

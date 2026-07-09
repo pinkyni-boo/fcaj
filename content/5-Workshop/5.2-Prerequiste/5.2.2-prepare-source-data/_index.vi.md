@@ -17,15 +17,15 @@ Trước khi bắt đầu luồng upload trực tiếp từ trình duyệt, bạ
 
 **Bước 1:** Kiểm tra **CORS configuration** trên bucket S3 dùng cho upload để trình duyệt được phép gửi request `PUT` hoặc `POST` trực tiếp.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/s3-upload-cors.png" alt="Cấu hình CORS cho bucket dùng trong luồng upload tài liệu" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/s3-upload-cors.png" alt="Cấu hình CORS cho bucket dùng trong luồng upload tài liệu" style="max-width: 90%; height: auto;">
 
 **Bước 2:** Cấu hình **Public access** cho bucket frontend, đảm bảo bỏ block tất cả public access để file tĩnh có thể được phục vụ ra ngoài.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/frontend-bucket-public-access.png" alt="Thiết lập public access của bucket frontend để phục vụ phân phối tĩnh" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/frontend-bucket-public-access.png" alt="Thiết lập public access của bucket frontend để phục vụ phân phối tĩnh" style="max-width: 90%; height: auto;">
 
 **Bước 3:** Kích hoạt tính năng **Static website hosting** trên bucket frontend và trỏ index document về `index.html`.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/frontend-bucket-static-hosting.jpg" alt="Cấu hình static website hosting của bucket frontend" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/frontend-bucket-static-hosting.jpg" alt="Cấu hình static website hosting của bucket frontend" style="max-width: 90%; height: auto;">
 
 {{% notice info %}}
 **Lưu ý:** Ngoài các cấu hình S3 trên, bạn cần chuẩn bị tài liệu mẫu (như 1 file PDF) và đảm bảo các biến môi trường của Frontend/Backend đã khớp nhau.

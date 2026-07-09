@@ -19,7 +19,7 @@ Sau khi tài liệu được duyệt, dữ liệu không chỉ đổi ở một 
 
 **Bước 3:** Truy cập trang tìm kiếm và đảm bảo dữ liệu mới nhất đã được đồng bộ, hiển thị đúng kết quả tài liệu vừa được duyệt.
 
-<img src="/fcaj/images/5-Workshop/AWS-Console/search-result.png" alt="Kết quả tìm kiếm đã hiển thị tài liệu sau khi được phê duyệt" style="max-width: 90%; height: auto;">
+<img src="/images/5-Workshop/AWS-Console/search-result.png" alt="Kết quả tìm kiếm đã hiển thị tài liệu sau khi được phê duyệt" style="max-width: 90%; height: auto;">
 
 **Bước 4:** Cho phép preview và download với tài liệu đã duyệt để người dùng có thể thao tác bình thường.
 
