@@ -29,6 +29,10 @@ After reading this workshop, the reader should be able to:
 
 The final outcome is a system where users can upload documents successfully, administrators can approve documents in the moderation area, approved documents appear in search results, end users can preview or download them, and the environment is monitored with CloudWatch logs, metrics, and alarms.
 
+#### Demo video
+
+Reviewers can watch the recorded CloudDoc demo here: [CloudDoc demo video](https://drive.google.com/drive/folders/1-mvKrbzs08WWHUT0-whSGeNwgtwd4Uid?usp=sharing).
+
 #### Workshop structure
 
 1. [Introduction](5.1-workshop-overview/)

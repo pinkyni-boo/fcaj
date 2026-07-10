@@ -11,6 +11,10 @@ pre: " <b> 5.4. </b> "
 
 This section proves that a document truly moves through the full CloudDoc workflow, from user submission to moderation approval and final visibility in the user-facing interface. This is the strongest end-to-end evidence in the workshop.
 
+#### Demo evidence
+
+The full recorded demo is available here for review: [CloudDoc demo video](https://drive.google.com/drive/folders/1-mvKrbzs08WWHUT0-whSGeNwgtwd4Uid?usp=sharing).
+
 #### Test sequence
 
 **Step 1:** Confirm the uploaded document appears in the admin moderation dashboard with a `pending` state.

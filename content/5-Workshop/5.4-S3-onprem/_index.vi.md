@@ -11,6 +11,10 @@ pre: " <b> 5.4. </b> "
 
 Phần này xác minh rằng tài liệu đã thật sự đi qua toàn bộ workflow của CloudDoc, từ lúc người dùng gửi file, tài liệu xuất hiện trong khu vực moderation, quản trị viên phê duyệt thành công, cho tới khi tài liệu được hiển thị lại ở các màn hình mà người dùng cuối có thể truy cập. Đây là phần quan trọng nhất để chứng minh tính end-to-end của workshop.
 
+#### Bằng chứng demo
+
+Người chấm có thể xem toàn bộ video demo tại đây: [Video demo CloudDoc](https://drive.google.com/drive/folders/1-mvKrbzs08WWHUT0-whSGeNwgtwd4Uid?usp=sharing).
+
 #### Quy trình kiểm thử
 
 Quy trình kiểm thử được thực hiện theo thứ tự sau:

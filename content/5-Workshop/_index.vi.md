@@ -29,6 +29,10 @@ Sau khi đọc xong mục này, người xem có thể:
 
 Kết quả cuối cùng của workshop là một hệ thống trong đó người dùng tải tài liệu lên thành công, quản trị viên duyệt tài liệu trong khu vực quản trị, tài liệu đã duyệt xuất hiện tại trang tìm kiếm, người dùng có thể xem trước hoặc tải xuống, đồng thời hệ thống được theo dõi bằng CloudWatch logs, metrics và alarm.
 
+#### Video demo
+
+Người chấm có thể xem video demo CloudDoc tại đây: [Video demo CloudDoc](https://drive.google.com/drive/folders/1-mvKrbzs08WWHUT0-whSGeNwgtwd4Uid?usp=sharing).
+
 #### Cấu trúc workshop
 
 1. [Giới thiệu](5.1-workshop-overview/)
