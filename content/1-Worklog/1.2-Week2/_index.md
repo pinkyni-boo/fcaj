@@ -1,7 +1,7 @@
 ---
 title: "Core infrastructure practice (EC2, S3) and IAM security"
 date: 2024-01-01
-weight: 1
+weight: 2
 chapter: false
 pre: " <b> 1.2. </b> "
 ---
@@ -14,11 +14,11 @@ pre: " <b> 1.2. </b> "
 ### Tasks to be carried out this week:
 | Day | Task | Start Date | Completion Date | Reference Material |
 | --- | --- | --- | --- | --- |
-| 2 | - Deep-dive into theory: watch and take notes on lecture modules about Amazon EC2 and Amazon S3.<br><br>- Analyze real-world use cases for each service. | 24/04/2026 | 24/04/2026 |  |
-| 3 | - Practice Lab (EC2): Launch virtual servers (instances) and choose suitable configurations (CPU, RAM).<br><br>- Configure Security Groups to act as a firewall (open port 22 for SSH and port 80 for HTTP). | 25/04/2026 | 25/04/2026 |  |
-| 4 | - Practice Lab (S3): Create an S3 bucket and explore storage classes for cost optimization.<br><br>- Upload/download files and configure Block Public Access to protect data. | 26/04/2026 | 26/04/2026 |  |
-| 5 | - Practice basic IAM configuration: create users and groups.<br><br>- Write and attach permission policies following the principle of least privilege. | 27/04/2026 | 27/04/2026 |  |
-| 6 | - Complete all remaining theory modules on the platform.<br><br>- Take the week's knowledge checks for review and consolidation. | 28/04/2026 | 28/04/2026 |  |
+| 1 | - Deep-dive into theory: watch and take notes on lecture modules about Amazon EC2 and Amazon S3.<br><br>- Analyze real-world use cases for each service. | 24/04/2026 | 24/04/2026 |  |
+| 2 | - Practice Lab (EC2): Launch virtual servers (instances) and choose suitable configurations (CPU, RAM).<br><br>- Configure Security Groups to act as a firewall (open port 22 for SSH and port 80 for HTTP). | 25/04/2026 | 25/04/2026 |  |
+| 3 | - Practice Lab (S3): Create an S3 bucket and explore storage classes for cost optimization.<br><br>- Upload/download files and configure Block Public Access to protect data. | 26/04/2026 | 26/04/2026 |  |
+| 4 | - Practice basic IAM configuration: create users and groups.<br><br>- Write and attach permission policies following the principle of least privilege. | 27/04/2026 | 27/04/2026 |  |
+| 5 | - Complete all remaining theory modules on the platform.<br><br>- Take the week's knowledge checks for review and consolidation. | 28/04/2026 | 28/04/2026 |  |
 
 
 ### Week 2 Achievements:

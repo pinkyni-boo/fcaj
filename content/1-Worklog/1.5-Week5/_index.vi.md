@@ -1,7 +1,7 @@
 ---
 title: "Học tập trực tiếp tại văn phòng và Nghiên cứu giải pháp kỹ thuật Frontend"
 date: 2024-01-01
-weight: 1
+weight: 5
 chapter: false
 pre: " <b> 1.5. </b> "
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Supporting AWS backend integration, end-to-end testing, and final reporting"
 date: 2024-01-01
-weight: 1
+weight: 12
 chapter: false
 pre: " <b> 1.12. </b> "
 ---
@@ -14,11 +14,11 @@ pre: " <b> 1.12. </b> "
 ### Tasks to be carried out this week:
 | Day | Task | Start Date | Completion Date | Reference Material |
 | --- | --- | --- | --- | --- |
-| 2 | Work with the backend side to review the API contracts for presigned upload URLs, metadata creation, and download links. | 06/07/2026 | 06/07/2026 |  |
-| 3 | Integrate frontend with backend endpoints and handle CORS, environment variables, and response states. | 07/07/2026 | 07/07/2026 |  |
-| 4 | Verify the direct-to-S3 upload flow and metadata persistence into PostgreSQL for the end-to-end path. | 08/07/2026 | 08/07/2026 |  |
-| 5 | Test preview, download, access control, and admin-related cases. | 09/07/2026 | 09/07/2026 |  |
-| 6 | Summarize project outcomes, update the proposal, and complete the internship report. | 10/07/2026 | 10/07/2026 |  |
+| 1 | Work with the backend side to review the API contracts for presigned upload URLs, metadata creation, and download links. | 06/07/2026 | 06/07/2026 |  |
+| 2 | Integrate frontend with backend endpoints and handle CORS, environment variables, and response states. | 07/07/2026 | 07/07/2026 |  |
+| 3 | Verify the direct-to-S3 upload flow and metadata persistence into PostgreSQL for the end-to-end path. | 08/07/2026 | 08/07/2026 |  |
+| 4 | Test preview, download, access control, and admin-related cases. | 09/07/2026 | 09/07/2026 |  |
+| 5 | Summarize project outcomes, update the proposal, and complete the internship report. | 10/07/2026 | 10/07/2026 |  |
 
 ### Week 12 Achievements:
 

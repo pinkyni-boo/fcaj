@@ -1,7 +1,7 @@
 ---
 title: "Tự học tại nhà, Thiết kế kiến trúc AWS và Chuẩn bị dự án"
 date: 2024-01-01
-weight: 1
+weight: 7
 chapter: false
 pre: " <b> 1.7. </b> "
 ---

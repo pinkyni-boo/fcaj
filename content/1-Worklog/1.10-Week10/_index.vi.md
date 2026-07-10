@@ -1,7 +1,7 @@
 ---
 title: "Hoàn thiện luồng người dùng, phân quyền và kiểm duyệt tài liệu"
 date: 2024-01-01
-weight: 1
+weight: 10
 chapter: false
 pre: " <b> 1.10. </b> "
 ---

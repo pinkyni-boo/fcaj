@@ -1,7 +1,7 @@
 ---
 title: "Phát triển giao diện cốt lõi và dữ liệu mô phỏng cho CloudDoc"
 date: 2024-01-01
-weight: 1
+weight: 9
 chapter: false
 pre: " <b> 1.9. </b> "
 ---

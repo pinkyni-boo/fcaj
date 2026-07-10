@@ -1,7 +1,7 @@
 ---
 title: "Thực hành hạ tầng cốt lõi (EC2, S3) và bảo mật IAM"
 date: 2024-01-01
-weight: 1
+weight: 2
 chapter: false
 pre: " <b> 1.2. </b> "
 ---

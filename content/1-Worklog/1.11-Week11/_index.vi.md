@@ -1,7 +1,7 @@
 ---
 title: "Tối ưu trải nghiệm, preview/download và giao diện quản trị"
 date: 2024-01-01
-weight: 1
+weight: 11
 chapter: false
 pre: " <b> 1.11. </b> "
 ---

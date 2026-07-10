@@ -1,7 +1,7 @@
 ---
 title: "Technology event participation and generative AI solution research"
 date: 2024-01-01
-weight: 1
+weight: 6
 chapter: false
 pre: " <b> 1.6. </b> "
 ---
@@ -14,7 +14,7 @@ pre: " <b> 1.6. </b> "
 ### Tasks to be carried out this week:
 | Day | Task | Start Date | Completion Date | Reference Material |
 | --- | --- | --- | --- | --- |
-| **6** | - **Attend the event:** Join the AWS community technology event in person.<br><br>- Network and learn practical experience from senior engineers. | 22/05/2026 | 22/05/2026 |  |
+| **1** | - **Attend the event:** Join the AWS community technology event in person.<br><br>- Network and learn practical experience from senior engineers. | 22/05/2026 | 22/05/2026 |  |
 | **2** | - **Knowledge consolidation:** Write a short summary report about the new technologies introduced at the event, especially Cloud AI topics. | 25/05/2026 | 25/05/2026 |  |
 | **3** | - **Research AI services:** Explore pre-trained AWS services such as Amazon Textract for text extraction or Amazon Lex. | 26/05/2026 | 26/05/2026 |  |
 | **4** | - **Research Generative AI:** Focus on understanding AWS Bedrock and how to access large language models (LLMs). | 27/05/2026 | 27/05/2026 |  |

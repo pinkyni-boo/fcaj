@@ -1,7 +1,7 @@
 ---
 title: "Hỗ trợ tích hợp Backend AWS, kiểm thử end-to-end và tổng kết dự án"
 date: 2024-01-01
-weight: 1
+weight: 12
 chapter: false
 pre: " <b> 1.12. </b> "
 ---

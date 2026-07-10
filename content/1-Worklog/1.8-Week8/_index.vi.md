@@ -1,7 +1,7 @@
 ---
 title: "Thiết lập dự án Frontend và Thiết kế kiến trúc hệ thống CloudDoc"
 date: 2024-01-01
-weight: 1
+weight: 8
 chapter: false
 pre: " <b> 1.8. </b> "
 ---

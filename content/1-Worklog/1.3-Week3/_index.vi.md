@@ -1,7 +1,7 @@
 ---
 title: "Triển khai Hạ tầng mạng (VPC) và Quản trị bảo mật đám mây"
 date: 2024-01-01
-weight: 1
+weight: 3
 chapter: false
 pre: " <b> 1.3. </b> "
 ---

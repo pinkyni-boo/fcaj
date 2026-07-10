@@ -1,7 +1,7 @@
 ---
 title: "In-office learning and frontend technical solution research"
 date: 2024-01-01
-weight: 1
+weight: 5
 chapter: false
 pre: " <b> 1.5. </b> "
 ---
@@ -14,7 +14,7 @@ pre: " <b> 1.5. </b> "
 ### Tasks to be carried out this week:
 | Day | Task | Start Date | Completion Date | Reference Material |
 | --- | --- | --- | --- | --- |
-| 6 | - Work at the office: attend the in-person session at Bitexco, follow discipline, and interact with other members. | 15/05/2026 | 15/05/2026 |  |
+| 1 | - Work at the office: attend the in-person session at Bitexco, follow discipline, and interact with other members. | 15/05/2026 | 15/05/2026 |  |
 | 2 | - Research core technical solutions: study the direct upload approach for large file transfers without an intermediate relay.<br><br>- Read AWS documentation about temporary access authorization using S3 Presigned URLs. | 18/05/2026 | 18/05/2026 |  |
 | 3 | - Learn at the office: join technical group discussions to resolve implementation blockers. | 19/05/2026 | 19/05/2026 |  |
 | 4 | - Study ReactJS: learn how to use React Hooks to manage data logic for multi-level filters (University -> Major -> Subject). | 20/05/2026 | 20/05/2026 |  |

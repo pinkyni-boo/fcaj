@@ -1,7 +1,7 @@
 ---
 title: "Network infrastructure deployment (VPC) and cloud security administration"
 date: 2024-01-01
-weight: 1
+weight: 3
 chapter: false
 pre: " <b> 1.3. </b> "
 ---
@@ -14,11 +14,11 @@ pre: " <b> 1.3. </b> "
 ### Tasks to be carried out this week:
 | Day | Task | Start Date | Completion Date | Reference Material |
 | --- | --- | --- | --- | --- |
-| **2** | - Study the theory of private virtual networking with Amazon VPC.<br><br>- Learn how to configure IP ranges, subnets, route tables, and an internet gateway to manage network traffic. | 01/05/2026 | 01/05/2026 |  |
-| **3** | - **Infrastructure Lab (Part 1):** Start configuring a real VPC on the AWS Console.<br><br>- Split resources into public and private subnets for better protection. | 04/05/2026 | 04/05/2026 |  |
-| **4** | - **Infrastructure Lab (Part 2):** Deploy EC2 servers and integrate S3 storage services into the VPC network space that was just configured. | 05/05/2026 | 05/05/2026 |  |
-| **5** | - Explore IAM security administration in greater depth.<br><br>- Practice creating users, groups, and detailed permission policies. | 06/05/2026 | 06/05/2026 |  |
-| **6** | - Consolidate knowledge and cross-check granted permissions to ensure compliance with the least privilege principle in cloud security. | 07/05/2026 | 07/05/2026 |  |
+| **1** | - Study the theory of private virtual networking with Amazon VPC.<br><br>- Learn how to configure IP ranges, subnets, route tables, and an internet gateway to manage network traffic. | 01/05/2026 | 01/05/2026 |  |
+| **2** | - **Infrastructure Lab (Part 1):** Start configuring a real VPC on the AWS Console.<br><br>- Split resources into public and private subnets for better protection. | 04/05/2026 | 04/05/2026 |  |
+| **3** | - **Infrastructure Lab (Part 2):** Deploy EC2 servers and integrate S3 storage services into the VPC network space that was just configured. | 05/05/2026 | 05/05/2026 |  |
+| **4** | - Explore IAM security administration in greater depth.<br><br>- Practice creating users, groups, and detailed permission policies. | 06/05/2026 | 06/05/2026 |  |
+| **5** | - Consolidate knowledge and cross-check granted permissions to ensure compliance with the least privilege principle in cloud security. | 07/05/2026 | 07/05/2026 |  |
 
 
 ### Week 3 Achievements:
