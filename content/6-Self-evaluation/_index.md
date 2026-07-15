@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 6. </b> "
 ---
 
-During my internship at **Amazon Web Services Viet Nam Company Limited** from **17/04/2026** to **10/07/2026**, I had the opportunity to learn in a cloud-oriented environment and contribute directly to the **CloudDoc** project. My main role was frontend development, but the project also pushed me to understand backend integration, metadata structure, and AWS-oriented system thinking more deeply.
+During my internship at **Amazon Web Services Viet Nam Company Limited** from **17/04/2026** to **30/07/2026**, I had the opportunity to learn in a cloud-oriented environment and contribute directly to the **CloudDoc** project. My main role was frontend development, but the project also pushed me to understand backend integration, metadata structure, and AWS-oriented system thinking more deeply.
 
 Looking back, I can see that I improved in ways that go beyond interface building. At the beginning, I was most confident in UI implementation and component organization. After working on CloudDoc, I learned that strong frontend work depends on data flow, business logic alignment, and system architecture awareness. That shift in mindset was one of the most meaningful outcomes of my internship.
 

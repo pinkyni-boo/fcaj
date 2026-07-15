@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 6. </b> "
 ---
 
-Trong suốt thời gian thực tập tại **Amazon Web Services Viet Nam Company Limited** từ **17/04/2026** đến **10/07/2026**, tôi có cơ hội học tập trong môi trường định hướng cloud chuyên nghiệp và tham gia trực tiếp vào dự án **CloudDoc**. Vai trò chính của tôi là phát triển **frontend**, nhưng quá trình làm việc thực tế còn giúp tôi mở rộng hiểu biết sang backend integration, metadata design và tư duy triển khai hệ thống trên AWS.
+Trong suốt thời gian thực tập tại **Amazon Web Services Viet Nam Company Limited** từ **17/04/2026** đến **30/07/2026**, tôi có cơ hội học tập trong môi trường định hướng cloud chuyên nghiệp và tham gia trực tiếp vào dự án **CloudDoc**. Vai trò chính của tôi là phát triển **frontend**, nhưng quá trình làm việc thực tế còn giúp tôi mở rộng hiểu biết sang backend integration, metadata design và tư duy triển khai hệ thống trên AWS.
 
 Nếu nhìn lại toàn bộ kỳ thực tập, tôi thấy mình tiến bộ nhiều hơn kỳ vọng ban đầu. Khi mới bắt đầu, tôi chủ yếu tự tin ở mức xây dựng giao diện và tổ chức component frontend. Sau một thời gian làm việc với CloudDoc, tôi dần hiểu rằng để một tính năng hoạt động tốt, frontend phải gắn chặt với luồng dữ liệu, cách backend xử lý nghiệp vụ và cách hạ tầng được thiết kế. Đây là thay đổi lớn nhất trong tư duy của tôi.
 

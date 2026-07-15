@@ -18,7 +18,7 @@ chapter: false
     <p><strong>Lớp:</strong> 22DTHD7</p>
     <p><strong>Công ty thực tập:</strong> Amazon Web Services Viet Nam Company Limited</p>
     <p><strong>Vị trí thực tập:</strong> Workforce Bootcamp - First Cloud AI Journey</p>
-    <p><strong>Thời gian thực tập:</strong> 17/04/2026 - 10/07/2026</p>
+    <p><strong>Thời gian thực tập:</strong> 17/04/2026 - 30/07/2026</p>
   </div>
   <div class="student-profile__avatar">
     <img src="/images/avatar-thao.jpg" alt="Ảnh đại diện của Vũ Thị Ngọc Thảo" style="width: 100%; max-width: 320px; height: auto; border-radius: 18px; box-shadow: 0 10px 30px rgba(15, 40, 75, 0.12); object-fit: cover;">

@@ -18,7 +18,7 @@ chapter: false
     <p><strong>Class:</strong> 22DTHD7</p>
     <p><strong>Internship Company:</strong> Amazon Web Services Viet Nam Company Limited</p>
     <p><strong>Internship Position:</strong> Workforce Bootcamp - First Cloud AI Journey</p>
-    <p><strong>Internship Duration:</strong> 17/04/2026 - 10/07/2026</p>
+    <p><strong>Internship Duration:</strong> 17/04/2026 - 30/07/2026</p>
   </div>
   <div class="student-profile__avatar">
     <img src="/images/avatar-thao.jpg" alt="Profile picture of Vu Thi Ngoc Thao" style="width: 100%; max-width: 320px; height: auto; border-radius: 18px; box-shadow: 0 10px 30px rgba(15, 40, 75, 0.12); object-fit: cover;">
